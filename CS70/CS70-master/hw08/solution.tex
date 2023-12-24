@@ -1,0 +1,275 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{07}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\renewcommand*{\bmod}{\mathbin{\%}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+\section*{Sundry}
+
+\begin{Answer}
+    I typeset the homework using \LaTeX and discussed the problems with the following people.
+    \begin{itemize}
+        \item Yijia Chen -- yijia.chen@berkeley.edu
+    \end{itemize}
+\end{Answer}
+
+\newpage
+\Question{Five Coins}
+
+\begin{Parts}
+    
+    \Part For the first three parts, order matters in the outcome. How many different outcomes are possible?
+    \begin{Answer}
+        $2^5 = 32$ different outcomes. 
+    \end{Answer}
+
+    \Part How many different outcomes are possible with exactly 3 heads?
+    \begin{Answer}
+        ${5 \choose 3} = 10$ different outcomes. 
+    \end{Answer}
+
+    \Part How many different outcomes are possible with 3 or more heads? Justify with an argument.
+    \begin{Answer}
+        ${32 / 2 = 16}$ different outcomes. If we want $3$ or more heads, we can have $3$, $4$, or $5$ heads. The 
+        complement to what we want in the sample space are those combinations with $3$ or more tails. Since the 
+        coin is unbiased, these two situations should be symmetric and thus have the same numbers of outcomes. 
+    \end{Answer}
+
+    \Part What is the probability of getting the outcome TTHHH? What is the probability of getting the outcome THHHH?
+    \begin{Answer}
+        The probability for TTHHHH is $\frac{1}{32}$. The probability for THHHH is $\frac{1}{32}$.
+    \end{Answer}
+
+    \Part What’s the probability of getting at least one heads?
+    \begin{Answer}
+        The probabilities for getting at least one heads is $1 - \frac{1}{32} = \frac{31}{32}$. 
+    \end{Answer}
+
+    \Part What’s the probability of getting 3 or more heads?
+    \begin{Answer}
+        According to the symmetry mentioned in $c$, the probability is $\frac{1}{2}$. 
+    \end{Answer}
+
+    \newpage
+    \Part For the next three parts, assume that the coin is biased with probability of heads being $\frac{2}{3}$. 
+          What is the probability of getting the outcome TTHHH? What is the probability of getting the outcome THHHH?
+    \begin{Answer}
+        The probability for TTHHH is $(\frac{1}{3})^2 \times (\frac{2}{3})^3 = \frac{8}{243}$. \\
+        The probability for THHHH is $\frac{1}{3} \times (\frac{2}{3})^4 = \frac{16}{243}$.  
+    \end{Answer}
+    
+    \Part What’s the probability of getting at least one heads?
+    \begin{Answer}
+        The probability of getting at least one heads is $1 - (\frac{1}{3})^5 = \frac{242}{243}$. 
+    \end{Answer}
+
+    \Part What’s the probability of getting 3 or more heads?
+    \begin{Answer}
+        The probability of getting $3$ heads is ${5 \choose 3}\frac{8}{243} = \frac{80}{243}$  \\
+        The probability of getting $4$ heads is ${5 \choose 4}\frac{16}{243} = \frac{80}{243}$ \\
+        The probability of getting $5$ heads is ${5 \choose 5}\frac{32}{243} = \frac{32}{243}$ \\
+        Thus the probability of getting 3 or more heads is $\frac{192}{243} = \frac{64}{81}$. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Weathermen}
+
+\begin{Parts}
+    
+    \Part If Tom says that it is going to snow, what is the probability it will actually snow?
+    \begin{Answer}
+        We model the problem as follows. Let $A$ be the event that New York snows. Let $B$ be the event that Tom 
+        says it will snow. According to the predicate, we have the following data. 
+        \begin{align*}
+            \mathbb{P}(A)                  &= 0.1 \\
+            \mathbb{P}(B \mid A)           &= 0.7 \\
+            \mathbb{P}(B \mid \overline A) &= 0.05
+        \end{align*}
+        Thus, $\mathbb{P}(A \mid B) = \frac{\mathbb{P}(A)\mathbb{P}(B \mid A)}{\mathbb{P}(B)} = \frac{0.07}{0.115} \approx 0.61$. 
+    \end{Answer}
+
+    \Part What is Tom’s overall accuracy?
+    \begin{Answer}
+        $\mathbb{P}(A)\mathbb{P}(B \mid A) + \mathbb{P}(\overline A)\mathbb{P}(\overline B \mid \overline A) = 0.925$. 
+    \end{Answer}
+
+    \Part Tom’s friend Jerry is a weatherman in Alaska. Jerry claims that she is a better weatherman than Tom even 
+          though her overall accuracy is lower. After looking at their records, you determine that Jerry is indeed 
+          better than Tom at predicting snow on snowy days and sun on sunny day. Give an instance of the situation 
+          described above.
+    \begin{Answer}
+        Say Jerry correctly predicts the snow $80\%$ of the time and no snow $100\%$ of the time. If Alaska snows
+        $90\%$ of the time, we have the overall accuracy of Jerry as $0.8 \times 0.9 + 1 \times 0.1 = 0.82 < 0.925$. 
+        In this case Jerry is a better weatherman even though her overall accuracy is lower. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Faulty Lightbulbs}
+
+\begin{Parts}
+    
+    \Part Suppose a box is given to you at random and you randomly select a lightbulb from the box. If that lightbulb 
+          is defective, what is the probability you chose Box 1?
+    \begin{Answer}
+        $\frac{0.5 \times 0.1}{0.5 \times 0.1 + 0.5 \times 0.05} \approx 0.67$. 
+    \end{Answer}
+
+    \Part Suppose now that a box is given to you at random and you randomly select two light- bulbs from the box. If 
+    both lightbulbs are defective, what is the probability that you chose from Box 1?
+    \begin{Answer}
+        If we are given box $1$, the probability that both lightbulbs are defective is $\frac{100 \times 99}{1000 \times 999}$.
+        If we are given box $2$, it's $\frac{100 \times 99}{2000 \times 1999}$. Thus given that both lightbulbs are defective, 
+        the probability that we chose from box $1$ is $\frac{2000 \times 1999}{1000 \times 999 + 2000 \times 1999} \approx 0.80$. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Solve the Rainbow}
+
+\begin{Parts}
+    
+    \Part If you take a Skittle from the bag, what is the probability that it is green?
+    \begin{Answer}
+        If all green Skittles are eaten, the probability to take a green Skittle is $0$. \\
+        If $10$ green Skittles are eaten, the probability to take a green Skittle is $\frac{1}{9}$. \\
+        If $5$ green Skittles are eaten, the probability to take a green Skittle is $\frac{3}{19}$. \\
+        Combining the result, the probability that it's green is $\frac{1}{4}(\frac{1}{9} + \frac{3}{19}) = \frac{23}{342}$. 
+    \end{Answer}
+
+    \Part If you take two Skittles from the bag, what is the probability that at least one is green?
+    \begin{Answer}
+        If all green Skittles are eaten, the probability is $0$. \\
+        If $10$ green Skittles are eaten, the probability is $1 - \frac{{80 \choose 2}}{{90 \choose 2}} $. \\
+        If $5$ green Skittles are eaten, the probability is $1 - \frac{{80 \choose 2}}{{95 \choose 2}}$. \\
+        The result is $\frac{1}{4}(\frac{169}{801} + \frac{261}{893})$. 
+    \end{Answer}
+
+    \Part If you take three Skittles from the bag, what is the probability that they are all green?
+    \begin{Answer}
+        If all green Skittles are eaten, the probability is $0$. \\
+        If $10$ green Skittles are eaten, the probability is $\frac{10 \times 9 \times 8}{90 \times 89 \times 88}$. \\
+        If $5$ green Skittles are eaten, the probability is $\frac{5 \times 4 \times 3}{95 \times 94 \times 93}$. \\
+        The result is $\frac{1}{4}(\frac{720}{704880} + \frac{60}{830490})$. 
+    \end{Answer}
+
+    \Part If all three Skittles you took from the bag are green, what are the probabilities that your roommate had all 
+          of the green ones, half of the green ones, or only 5 green ones?
+    \begin{Answer}
+        Probability that all green Skittles are eaten is $0$. 
+        Probability that $10$ green Skittles are eaten is $\frac{\frac{720}{704880}}{\frac{720}{704880} + \frac{60}{830490}}$.
+        Probability that $5$ green Skittles are eaten is $\frac{\frac{60}{830490}}{\frac{720}{704880} + \frac{60}{830490}}$.
+    \end{Answer}
+
+    \Part If you take three Skittles from the bag, what is the probability that they are all the same color?
+    \begin{Answer}
+        The probability that they are all green is $\frac{1}{4}(\frac{720}{704880} + \frac{60}{830490})$. 
+        The probability that they are all some other color is $4(\frac{1}{2}\frac{20 \times 19 \times 18}{80 \times 79 \times 78}$
+        $+ \frac{1}{4}\frac{20 \times 19 \times 18}{90 \times 89 \times 88} + \frac{1}{4}\frac{20 \times 19 \times 18}{95 \times 94 \times 93})$.
+        The sum is the total probability. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Playing Strategically}
+
+\begin{Parts}
+    
+    \Part Compute the probability of the event $E_1$ that Bob wins in a duel against Eve alone, assuming he shoots first.
+    \begin{Answer}
+        Let $x$ be the probability Bob wins in a duel against Eve alone. The probability that Bob directly hits Eve is 
+        $\frac{1}{3}$. The probability that Bob misses Eve but still wins is $\frac{2}{3}\frac{1}{3}x$. For each arbitrary 
+        round these are the only two possible cases for Bob to win, thus we have $\frac{1}{3} + \frac{2}{9}x = x$. Solving 
+        the equation we have $x = \frac{3}{7}$. 
+    \end{Answer}
+
+    \Part Compute the probability of the event $E_2$ that Bob wins in a duel against Eve alone, assuming he shoots second.
+    \begin{Answer}
+        Let $x$ be the probability Bob wins in a duel against Eve alone assuming he shoots second. If Bob hits Eve in his 
+        first shot, it means that Eve has to miss her first shot; thus the probability is $\frac{1}{3}\frac{1}{3}=\frac{1}{9}$.
+        If Bob misses Eve, the probability that he wins is $\frac{1}{3}\frac{2}{3}x$. For each arbitrary round these are 
+        the only two possible cases for Bob to win if he shoots second, thus we have $\frac{2}{9}x + \frac{1}{9} = x$. 
+        Solving the equation we have $x = \frac{1}{7}$. 
+    \end{Answer}
+
+    \Part Compute the probability of the same events for a duel of Bob against Carol.
+    \begin{Answer}
+        Let $x$ be the probability Bob wins in a duel against Carol assuming he shoots first. The probability that Bob 
+        hits Carol in his first shot is $\frac{1}{3}$. If he misses he will die for sure because Carol never misses. 
+        Thus we have $x = \frac{1}{3}$ if Bob shoots first. \\
+        Let $x$ be the probability Bob wins in a duel against Carol assuming he shoots second. The probability that Bob 
+        hits Carol in his second shot is $0$ because Carol will never miss her first shot. Thus $x = 0$ if Bob shoots 
+        second in a duel with Carol. 
+    \end{Answer}
+
+    \newpage
+    \Part Assuming that both Eve and Carol play rationally, conclude that Bob’s best course of action is to shoot into 
+          the air (i.e., intentionally miss)!
+    \begin{Answer}
+        Since Bob shoots first, we have the below three cases for Bob. 
+        \begin{itemize}
+            \item Bob hits Carol. Then Bob goes into a duel with Eve, shooting second, winning rate $\frac{1}{7}$. 
+            \item Bob hits Eve. Then Bob goes into a duel with Carol, shooting second, winning rate $0$. 
+            \item Bob misses. First we consider Carol. Since she never misses, her optimal strategy is to eliminate 
+                  someone who posts more danger to her. In this case it's Eve, who shoots more precisely than Bob. 
+                  Since Eve knows that if she doesn't shoot Carol, she will definitely be killed by Carol in the next 
+                  round, in her round she will choose to shoot Carol. If she hits Carol, it's Bob's duel with Eve with 
+                  Bob shooting first, winning rate $\frac{3}{7}$. If she misses Carol, Eve kills Carol and Bob goes into 
+                  a duel with Carol with Bob shooting first, winning rate $\frac{1}{3}$. Thus if Bob misses his winning 
+                  rate is $\frac{3}{7}\frac{2}{3} + \frac{1}{3}\frac{1}{3} = \frac{25}{63} > \frac{1}{7} > 0$. 
+        \end{itemize}
+        Thus we conclude that Bob's optimal strategy is to intentionally miss his first shoot.
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Minesweeper}
+
+\begin{Parts}
+    
+    \Part What is the probability that the square reveals a mine? a blank space? the number $k$? 
+    \begin{Answer}
+        The probability that the square reveals a mine is $\frac{5}{32}$. \\
+        The probability that the square reveals a blank space is $\frac{{55 \choose 10}}{{64 \choose 10}}$. \\
+        The probability that the square reveals $k$ is $\frac{{8 \choose k}{55 \choose 10-k}}{{64 \choose 10}}$.
+    \end{Answer}
+
+    \Part The first square you picked revealed the number k. For your next move, you want to minimize the probability of 
+          picking a mine. Should you pick a square adjacent to your first pick, or a different square?
+    \begin{Answer}
+        The Probability that a square not adjacent to the first pick is a mine is $\frac{10 - k}{55}$. The probability that 
+        a square adjacent to the first pick is a mine is $\frac{k}{8}$. 
+        \begin{align*}
+            \frac{10-k}{55} - \frac{k}{8} = \frac{80-63k}{440} = 0 \implies k = \frac{80}{63} 
+        \end{align*}
+        Thus if $k \leq 1$, choose an adjacent square. If $k > 1$, choose a non-adjacent square. 
+    \end{Answer}
+
+    \Part Your first move resulted in the number 1. You pick the square to the right for your next move. What is the 
+          probability that this square reveals the number 4?
+    \begin{Answer}
+        I don't know. 
+    \end{Answer}
+\end{Parts}
+
+\end{document}

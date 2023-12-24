@@ -1,0 +1,348 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{06}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\renewcommand*{\bmod}{\mathbin{\%}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+\section*{Sundry}
+
+\begin{Answer}
+    I typeset the homework using \LaTeX and finished all the problems by myself. 
+\end{Answer}
+
+\newpage
+\Question{Error-Detecting Codes}
+
+\begin{Answer}
+    We construct a polynomial under $\mathrm{GF}(p)$ as follows. 
+    \begin{align*}
+        f = a_0 + a_1x + a_2x^2 + \ldots + a_{n-1}x^{n-1} \Mod{p}
+    \end{align*}
+    Then during the communication we transmit the following $n + k$ packets. 
+    \begin{align*}
+        f(1), f(2), f(3), \ldots, f(n+k-1), f(n+k)
+    \end{align*}
+    Then the algorithm will be as follows. For every group of $n$ data points we construct a polynomial $f$. Then we can construct 
+    a total of ${n + k \choose n}$ polynomials. If these polynomials are all identical, we output the identical polynomial and 
+    conclude that this is the correct message. If they are not identical we conclude 
+    there's an error and discard the message. 
+    \begin{proof}
+        We will proceed by a direct proof. \\
+        Since the maximum number of error is $k$, there are at least $n$ correct data points. Thus among all the groups of $n$ points 
+        among the $n+k$ points, there is at least one group that contains all the correct data points. Thus there is at least one 
+        polynomial among the ${n+k \choose n}$ polynomials we construct is the correct one. If all data points are correct then 
+        any group of $n$ points give us the correct polynomial. If there's any error there exists some polynomial that will differ
+        from the correct one, i.e. all polynomials cannot be identical. Thus the scheme detects errors effectively. 
+    \end{proof}
+\end{Answer}
+
+\newpage
+\Question{Berlekamp-Welch Algorithm with Fewer Errors}
+
+\begin{Parts}
+
+    \Part Suppose Bob receives the message $(4,5,4)$. Without performing Gaussian elimination explicitly, find $E(x)$ and $Q(x)$. 
+
+    \begin{Answer}
+        From the scenario we know that $k = 1$, $n = 1$. Thus let $Q(x) = a_1x + a_0$, $E(x) = x + b_0$. 
+        \begin{align*}
+            a_0         &= 4b_0 \\
+            a_1 + a_0   &= 5(1 + b_0) \\
+            2a_1 + a_0  &= 4(2 + b_0)
+        \end{align*}
+        According to the equations above we know that $Q(x) = 4x - 4$, $E(x) = x - 1$. 
+    \end{Answer}
+
+    \Part Now, suppose there were no general errors and Bob receives the original message $(4,4,4)$. Show that the $Q(x), E(x)$ 
+          that you found in part $(a)$ still satisfies $Q(i) = r_iE(i)$ for all $i = 0,1,2$. 
+
+    \begin{Answer}
+        We have the below equations true when the message is $(4,4,4)$. 
+        \begin{align*}
+            Q(0) = -4, E(0) = -1, r_0 = 4 &\implies Q(0) = r_0E(0) \\
+            Q(1) = 0, E(1) = 0, r_1 = 4   &\implies Q(1) = r_1E(1) \\
+            Q(2) = 4, E(2) = 1, r_2 = 4   &\implies Q(2) = r_2E(2)
+        \end{align*}
+    \end{Answer}
+
+    \Part Verify that $E(x) = x, Q(x) = 4x$ is another possible set of polynomials that satisfies $Q(i) = r_iE(i)$ for all 
+          $i = 0, 1, 2$. 
+    
+    \begin{Answer}
+        We have the below equations true for $E(x) = x, Q(x) = 4x$.
+        \begin{align*}
+            Q(0) = 0, E(0) = 0, r_0 = 4 &\implies Q(0) = r_0E(0) \\
+            Q(1) = 4, E(1) = 1, r_1 = 4 &\implies Q(1) = r_1E(1) \\
+            Q(2) = 8, E(2) = 2, r_2 = 4 &\implies Q(2) = r_2E(2)
+        \end{align*}
+    \end{Answer}
+
+    \newpage
+    \Part Suppose you're actually trying to decode the received message $(4,4,4)$. Based on what you showed in the previous two 
+          parts, what will happen during row reduction when you try to solve for the unknowns? 
+
+    \begin{Answer}
+        We have the following equations for $Q(x) = a_1x + a_0$, $E(x) = x + b_0$ if the message is $(4,4,4)$. 
+        \begin{align*}
+            a_0         &= 4b_0 \\
+            a_1 + a_0   &= 4(1 + b_0) \\
+            2a_1 + a_0  &= 4(2 + b_0)
+        \end{align*}
+        After row reduction we get $Q(x) = 4x + 4b_0$, $E(x) = x + b_0$. \\
+        We actually end up having a free variable in row reduction and there are infinitely many solutions. 
+    \end{Answer}
+
+    \Part Prove that no matter what the solution of $Q(x)$ and $E(x)$ are though, the recovered $P(x)$ will always be the same. 
+
+    \begin{Answer}
+        When solving the equation presented above, we know that $a_1 = 4$ and $a_0 = 4b_0$. Thus we can write $Q(x)$ and $E(x)$ 
+        in terms of $b_0$. 
+        \begin{align*}
+            Q(x) &= 4x + 4b_0 \\
+            E(x) &= x + b_0 \\
+            P(x) &= \frac{Q(x)}{E(x)} \\
+                 &= \frac{4x + 4b_0}{x + b_0} \\
+                 &= 4
+        \end{align*}
+        Thus no matter what exact $Q(x)$ and $E(x)$ we choose, we always get the correct $P(x) = 4$. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Counting Cartesian Products}
+
+\begin{Parts}
+    
+    \Part Given two countable sets $A$ and $B$, prove that $A \times B$ is countable. 
+
+    \begin{Answer}
+        \textbf{Claim:} $A$ is countable, $B$ is countable $\implies A \times B$ is countable. 
+        \begin{proof}
+            There exists an ordering $L_A = \{a_0,a_1,a_2,\ldots\}$ such that every element in $A$ has a finite index in $L_A$. 
+            Similarly we define $L_B = \{b_0,b_1,b_2,\ldots\}$ where every element in $B$ has a finite index in $L_B$. We then order 
+            the elements in $A \times B$ as follows. 
+            \begin{align*}
+                L_{A \times B} = \{(a_0,b_0),(a_1,b_0),(a_0,b_1),(a_0,b_2),(a_1,b_1),(a_2,b_0),\ldots\}
+            \end{align*}
+            In our ordering, we group all elements with the same $i + j$ values together. There are at most $i + j + 1$ possible
+            $(a_i,b_j)$ combinations in $A \times B$ for any given $i + j$. Thus for any element $(a_i,b_j) \in A \times B$, its index
+            in our ordering is at most $\sum_{k=0}^{i+j+1} k = \frac{(i+j+1)(i+j+2)}{2}$, which is also a finite number because $i$,$j$
+            are finite indices for $a_i \in A$ and $b_j \in B$. \\
+            Thus we conclude that $A$ is countable and $B$ is countable $\implies A \times B$ is countable. 
+        \end{proof}
+    \end{Answer}
+
+    \Part Given a finite number of countable sets $A_1, A_2, \ldots, A_n$, prove that $A_1 \times A_2 \times \ldots \times A_n$ is countable. 
+
+    \begin{Answer}
+        \textbf{Claim:} $A_1,A_2,\ldots,A_n$ are countable $\implies A_1 \times A_2 \times \ldots \times A_n$ is countable. 
+        \begin{proof}
+            The proof will be by the induction on $n$. \\
+            \emph{Base Case:} We will prove the claim is true for $n = 1$ and $n = 2$. 
+            \begin{itemize}
+                \item $n = 1$, $A_1$ itself is countable by the predicate. 
+                \item $n = 2$, $A_1 \times A_2$ is countable by part $a$. 
+            \end{itemize}
+            \emph{Inductive Hypothesis:} Assume that $A_1 \times A_2 \times \ldots \times A_{n-1}$ is countable. \\
+            \emph{Inductive Step:} We must show that $A_1 \times A_2 \times \ldots\
+            \times A_{n-1} \times A_n$ is countable. \\
+            According to the inductive hypothesis, we can define $B = A_1 \times A_2 \times \ldots \times A_{n-1}$. Since $B$ is a countable
+            set, according to part $a$, $B \times A_n$ is also countable. Thus by induction, we conclude that the Cartesian product of a 
+            finite number of countable sets is also countable. 
+        \end{proof}
+    \end{Answer}
+
+    \newpage
+    \Part Consider an infinite number of countable sets: $B_1, B_2, \ldots$. Under what conditions is $B_1 \times B_2 \times \ldots$
+          countable? Prove that if this condition is violated, $B_1 \times B_2 \times \ldots$ is uncountable. 
+    
+    \begin{Answer}
+        \textbf{Claim:} Trivially if any $B_i$ is an empty set, $B_1 \times B_2 \times \ldots$ is empty. We will assume $B_i$ are not empty below.
+
+        \textbf{Claim:} There are finitely many $B_i$ with more than $1$ element $\implies B_1 \times B_2 \times \ldots$ is countable.
+        \begin{proof}
+            We will proceed with a direct proof. \\
+            For any $B_i$ with only one element, every element of $B_1 \times B_2 \times \ldots$ must necessarily use the single 
+            element of $B_i$. Thus we can ignore all the $B_i$ with only one element. By part $b$, the Cartesian product of any finite 
+            number of countable sets is countable, so in this case $B_1 \times B_2 \times \ldots$ is countable. 
+        \end{proof}
+        \textbf{Claim:} $ B_1 \times B_2 \times \ldots$ is countable $\implies$ there are finitely many $B_i$ with more than $1$ element. 
+        \begin{proof}
+            We will proceed by contraposition. \\
+            Suppose there are infinitely many sets with at least two elements. For any $B_i$ with only one element, every element of 
+            $B_1 \times B_2 \times \ldots$ must necessarily use the single element. Thus we can ignore all the $B_i$ with only one element and 
+            assume all $B_i$ has at least two elements. Assume that $B_1 \times B_2 \times \ldots$ is countable and has the following 
+            enumeration where $b_{i,j}$ means $b_{i,j} \in B_i$ and appears in the $j^{th}$ element in the Cartesian product. 
+            \begin{align*}
+                (b_{1,1}, b_{2,1}, b_{3,1}, b_{4,1}, \ldots) \\
+                (b_{1,2}, b_{2,2}, b_{3,2}, b_{4,2}, \ldots) \\
+                (b_{1,3}, b_{2,3}, b_{3,3}, b_{4,3}, \ldots) \\
+                (b_{1,4}, b_{2,4}, b_{3,4}, b_{4,4}, \ldots) \\
+                (b_{1,5}, b_{2,5}, b_{3,5}, b_{4,5}, \ldots)
+            \end{align*}
+            Thus we can then construct a new element $(b_{1,i_1}, b_{2,i_2}, b_{3,i_3}, \ldots)$ where $b_{k,i_k} \neq b_{k,k}$ and 
+            $b_{k,i_k} \in B_k$. Because all $B_i$ has at least two elements, we can always find such a $b_{k,i_k}$ for any $k$. This 
+            is a valid element in the Cartesian product but the element does not exist in our enumeration. Thus we have a contradiction. \\
+            We conclude that the claim is true. 
+        \end{proof}
+    \end{Answer}
+    
+\end{Parts}
+
+\newpage
+\Question{Counting Tools}
+
+\begin{Parts}
+    
+    \Part $\bigcup_{i\in A} B_i$, where $A, B_i$ are all countable.
+
+    \begin{Answer}
+        \textbf{Claim:} $A, B_i$ are all countable $\implies \bigcup_{i \in A} B_i$ is countable. 
+        \begin{proof}
+            Using the fact that $A, B_i$ are all countable, we define elements in $\bigcup_{i \in A} B_i$ as $b_{i,j}$ where 
+            $b_{i,j} \in B_i$ and $b_{i,j}$ is finitely indexed $j$ in $B_i$. Consider the following ordering of $b_{i,j}$. 
+            \begin{align*}
+                &b_{0,0} \\
+                &b_{1,0}, b_{0,1} \\
+                &b_{2,0}, b_{1,1}, b_{0,2} \\
+                &b_{3,0}, b_{2,1}, b_{1,2}, b_{0,3} \\
+                &\ldots
+            \end{align*}
+            By such a grouping, $\forall b_{i,j} \in \bigcup_{i \in A} B_i$, the index of $b_{i,j} \leq \frac{(i+j+1)(i+j+2)}{2}$ in our 
+            ordering. We have provided an order in which every element has a finite position. Thus we conclude the claim. 
+        \end{proof}
+    \end{Answer}
+    
+    \Part The set of all functions $f$ from $\N$ to $\N$ such that $f$ is non-decreasing. That is, $f(x) \leq f(y)$ whenever $x \leq y$.
+
+    \begin{Answer}
+        \textbf{Claim:} The set $\{f_{\N \to \N} \mid x \leq y \implies f(x) \leq f(y)\}$ is uncountable. 
+        \begin{proof}
+            The proof will be based on contradiction. \\
+            Assume that the set is countable and there is a listing $f_1, f_2, f_3, \ldots$. Define $F(n)$ as follows. 
+            \begin{align*}
+                n = 1, F(1) &= f_1(1) + 1 \\
+                n > 1, F(n) &= F(n - 1) + f_n(n) + 1
+            \end{align*}
+            According to our construction, $F(n) \neq f_n(n)$ so $F$ is not in the list. Clearly $F$ is non-decreasing since 
+            $F(n) - F(n - 1) = f_n(n) + 1 > 0$. Thus the set is uncountable. 
+        \end{proof}
+    \end{Answer}
+    
+    \newpage
+    \Part The set of all functions $f$ from $\N$ to $\N$ such that $f$ is non-increasing. That is, $f(x) \geq f(y)$ whenever $x \leq y$.
+
+    \begin{Answer}
+        \textbf{Claim:} The set $\{f_{\N \to \N} \mid x \leq y \implies f(x) \geq f(y)\}$ is countable. 
+        \begin{proof}
+            From the definition we know that $f(1) \geq f(2) \geq f(3) \ldots$. In addition, $f(n) \geq 0$ is always true, thus $f(i)$ 
+            are eventually constant. Formally $(\exists n_0,i)(\forall n \geq n_0), f(n) = i$. Let $F_{n_0,i}$ be the set of 
+            functions where $\forall n \geq n_0, f(n) = i$. Then $\forall f \in F_{n_0,i}$, $f$ can be represented as a finite set of 
+            function values $(f(0), f(1),f(2),f(3),\ldots,f(n_0-1))$. For each fixed values $n_0, i$, the set $F_{n_0,i}$ because we can
+            always enumerate all lists of decreasing natural numbers larger than $i$ with length $n_0$. In addition, the set of all 
+            $(n_0,i)$ pairs is countable because its size is equal to $\N \times \N$. Define $A = \{(n_0,i) \mid n_0 \in \N, i \in \N\}$,
+            according to part $a$, $\bigcup_{(n_0,i) \in A} F_{n_0,i}$ is countable. Thus the claim holds. 
+        \end{proof}
+    \end{Answer}
+    
+    \Part The set of all bijective functions from $\N$ to $\N$.
+
+    \begin{Answer}
+        \textbf{Claim:} The set of all bijective functions from $\N$ to $\N$ is uncountable. 
+        \begin{proof}
+            We will proceed by contradiction. \\
+            Suppose the set of all bijective functions from $\N$ to $\N$ is countable, then there is a listing $f_0,f_1,f_2,\ldots$ where
+            every bijective function from $\N$ to $\N$ has a finite index. We represent the listing as follows. 
+            \begin{align*}
+                f_0 &= (f_0(0), f_0(1), f_0(2), f_0(3), \ldots) \\
+                f_1 &= (f_1(0), f_1(1), f_1(2), f_1(3), \ldots) \\
+                f_2 &= (f_2(0), f_2(1), f_2(2), f_2(3), \ldots) \\
+                \ldots &= \ldots
+            \end{align*}
+            We can always construct an $F$ as follows. 
+            \begin{align*}
+                F_0 &\neq f_0(0) \\
+                F_1 &\neq f_1(1) \\
+                F_2 &\neq f_2(2)
+            \end{align*}
+            We can always make such an $F$ to be also a bijection from $\N$ to $\N$ because for every finite $f_k(k)$ there are infinitely 
+            many natural numbers left unused by $F$. Thus there is not a finite listing of all bijective function from $\N$ to $\N$. Thus 
+            the set is uncountable. 
+        \end{proof}
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Fixed Points}
+
+\begin{Answer}
+    We will show that if this problem is solved then the halting problem is solved. We construct the halting function $\mathrm{HALT}(F,x)$. 
+    In side the function we create an $F'$ that runs $F(x)$. If $F(x)$ halts then $F'$ returns $x$, otherwise it is not terminated. We then 
+    call $\mathrm{search}(F', x)$, the function to check whether a program has a fixed point. If the function returns true it means $F$ halts, 
+    and the function would return false if $F$ does not halt. By such a construction we have solved the halting problem. However we know that
+    the halting problem cannot be solved. Thus the function $\mathrm{search}$ cannot exist. 
+\end{Answer}
+
+\newpage
+\Question{Kolmogorov Complexity}
+
+\begin{Parts}
+
+    \Part Explain why "the smallest positive integer not definable in under $100$ characters" is paradoxical.
+
+    \begin{Answer}
+        The definition of the smallest positive integer meets the condition that it has under $100$ characters, so it cannot be undefinable. 
+    \end{Answer}
+
+    \Part Prove that for any length $n$, there must be at least one bit string that cannot be compressed.
+
+    \begin{Answer}
+        \begin{proof}
+            We will proceed by contradiction. \\
+            Assume $\forall n$, all bit strings of length $n$ can be compressed. Then for every bit string we can compress it into at most 
+            length $n - 1$. The total number of possible length $n$ bit strings is $2^n$, but the total number of possible length $n-1$ bit 
+            strings is $2^{n-1}$. Since one compressed string cannot output two different $x$, the actual maximum number of strings that can 
+            be compressed is $2^{n-1}$. We now have a contradiction. Thus there exists at least one bit string that cannot be compressed. 
+        \end{proof}
+    \end{Answer}
+
+    \Part Imagine you had the program $K$, which outputs the Kolmogorov complexity of string. Design a program $P$ that when given integer 
+          $n$ outputs the bit string of length $n$ with the highest Kolmogorov complexity. If there are multiple strings with the highest 
+          complexity, output the lexicographically first (i.e. the one that would come first in a dictionary).
+
+    \begin{Answer}
+        We design the algorithm as follows. We initialize the output string as $000\ldots0$. We then enumerate every possible length $n$ 
+        bit string in lexicographical order and for each enumerated string, if running program $K$ on the current string results in a higher 
+        value than running program $K$ on the output string, we update the output string to be the current string. After enumeration we 
+        return the output string. 
+    \end{Answer}
+
+    \Part Suppose the program $P$ you just wrote can be written in $m$ bits. Show that $P$ and by extension, K, cannot exist, for a sufficiently 
+          large input $n$.
+
+    \begin{Answer}
+        From part $b$ we know that there exists at least one bit string that cannot be compressed. Assume that $s$ is lexicographically the 
+        largest among all bit strings that cannot be compressed. According to the definition of $s$ and $K$, $K(s) = n$. According to our 
+        definition of $P$, $P$ will output $s$. When $n >> m$, we have actually found a way to compress $s$. Thus we have reached a 
+        contradiction. As a result, $P$ and by extension, $K$, cannot exist for a sufficiently large input $n$. 
+    \end{Answer}
+    
+\end{Parts}
+
+\end{document}

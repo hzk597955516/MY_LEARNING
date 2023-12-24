@@ -1,0 +1,335 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{04}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\renewcommand*{\bmod}{\mathbin{\%}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+\section*{Sundry}
+
+\begin{Answer}
+    I typeset the homework using \LaTeX and discussed the problems with the following people. 
+    \begin{itemize}
+        \item Yijia Chen -- yijia.chen@berkeley.edu
+        \item Rui Chen -- ruichen@berkeley.edu
+    \end{itemize}
+\end{Answer}
+
+\newpage
+\question{Bijective or Not}
+
+\begin{Parts}
+    \Part $f(x) = 10^{-5}x$
+    \begin{Answer}
+        \begin{enumerate}[(i)]
+        \item \textbf{Claim:} $f(x)$ is bijective for domain $\R$ and range $\R$. 
+            \begin{proof}
+                We will show that $f(x)$ is both one-to-one and onto.
+                \begin{itemize}
+                    \item Assume $x,y \in \R$, $f(x)=f(y)$. $10^{-5}x=10^{-5}y \implies x=y$. Thus $f(x)$ is one-to-one.
+                    \item $\forall b \in \R$, $\exists x \in R$ such that $f(x)=b$ because $x=10^5b$. Thus $f(x)$ is onto. 
+                \end{itemize}
+                We conclude that $f(x)$ is bijective for domain $\R$ and range $\R$. 
+            \end{proof}
+        \item \textbf{Claim:} $f(x)$ is not bijective for domain $\Z \cup \{\pi\}$ and range $\R$.
+            \begin{proof}
+                We will show that $f(x)$ is not onto $\R$ for domain $\Z \cup \{pi\}$. \\
+                Consider a counter example $b=10^{-6}$. $f(x)=b \implies x=10^{-1}$. $x \notin \Z \cup \{\pi\}$. \\
+                We conclude that $f(x)$ is not bijective for domain $\Z \cup \{\pi\}$ and range $\R$. 
+            \end{proof}
+        \end{enumerate}
+    \end{Answer}
+
+    \Part $f(x) = \{x\}$, where the domain is $D = \{0,\dots, n\}$ and the range is $\mathcal P(D)$, the power set of $D$ (that is, the set of all subsets of $D$).
+    \begin{Answer}
+        \textbf{Claim:} $f(x)$ is not bijective in this case. 
+        \begin{proof}
+            We will show that $f(x)$ is not onto $\mathcal P(D)$. \\
+            Consider a counter example where $n=2$. $D=\{1,2\}$, $\mathcal P(D)=\{\emptyset,\{1\},\{2\},\{1,2\}\}$. Say $b=\{1,2\}$.
+            There exists no $x$ such that $f(x)=b$ because $\{x\}$ is a single-element set while $b$ has two elements. \\
+            We conclude that since $b$ is not onto its range then $b$ is not bijective. 
+        \end{proof}
+    \end{Answer}
+
+    \Part Consider the number $X = 1234567890$, and obtain $X'$ by shuffling the order of the digits of $X$. Is $f(i) = (\text{i} + 1)^{\text{st}}$ \textit{digit of} $X'$ a bijection from $\{0,\dots, 9\}$ to itself?
+    \begin{Answer}
+        \textbf{Claim:} $f(i) = (\text{i} + 1)^{\text{st}}$ \textit{digit of} $X'$ is a bijection from $\{0,\dots, 9\}$ to itself. 
+        \begin{proof}
+            We will show that $f(i)$ is both one-to-one and onto. 
+            \begin{itemize}
+                \item Assume $x,y \in \{0,\ldots,9\}$ and $f(x)=f(y)$. Since $X'$ is obtained by shuffling the order of $1234567890$, the ten digits in $X'$ are also unique. 
+                      Thus $x \neq y \implies f(x) \neq f(y)$. The contraposition is exactly $f(x)=f(y) \implies x=y$. Thus $f(i)$ is one-to-one. 
+                \item $\forall b \in X'$, if there is no $i$ such that $f(i)=b$, then $b$ is not present in $X'$, then $b$ is also not present in $X$. 
+                      but $b$ must be present in $X$ because $b \in \{1,\ldots,9\}$. The contradiction tells us that $f(i)$ is onto its range. 
+            \end{itemize}
+            Thus we conclude that $f(i) = (\text{i} + 1)^{\text{st}}$ \textit{digit of} $X'$ is a bijection from $\{0,\dots, 9\}$ to itself. 
+        \end{proof}
+    \end{Answer}
+
+    \Part $f(x) = x^5 \pmod{187}$, where the domain is $\{0, 1, 2, 3, \ldots, 186\}$ and the range is $\{0, 1, 2, 3, \ldots, 186\}$.
+    \begin{Answer}
+        \textbf{Claim:} $f(x)=x^5$ is not bijective where domain and range are $\{0,1,2,3,\ldots,186\}$.
+        \begin{proof}
+            We give the below counterexample to show that $f(x)$ is not one to one.
+            \begin{align*}
+                1^5 = 69^5 = 1 \Mod{187}
+            \end{align*}
+            Thus we conclude $f(x)=x^5 \Mod{187}$ is not bijective with domain and range $\{0,1,2,3,\ldots,187\}$.
+        \end{proof}
+    \end{Answer}
+
+    \Part $f(x) = x^3 \pmod{187}$, where the domain is $\{0, 1, 2, 3, \ldots, 186\}$ and the range is $\{0, 1, 2, 3, \ldots, 186\}$.
+    \begin{Answer}
+        \textbf{Claim:} $f(x)=x^3 \Mod{187}$ is bijective with domain and range $\{0,1,2,3,\ldots,186\}$. 
+        \begin{proof}
+            We will be using the Chinese Remainder Theorem and Fermat's Little Theorem. \\
+            Since $187=11\times 17$, first assume $a,b \in \N$, $0 \leq a < 11$, $0 \leq b < 17$. Consider the following: 
+            \begin{align*}
+                x   &= a \Mod{11} \\
+                x   &= b \Mod{17} \\
+                34  &= 1 \Mod{11} = 0 \Mod{17} \\
+                154 &= 0 \Mod{17} = 1 \Mod{11} \\
+                x   &= 34a + 154b \Mod{187}
+            \end{align*}
+            Due to the isomorphism between $(a,b)$ and $x$, we have 
+            \begin{align*}
+                x^3 &= 34a^3 + 154b^3 \Mod{187} \\
+                x^3 &= a^3 \Mod{11} \\
+                x^3 &= b^3 \Mod{17}
+            \end{align*}
+            By Fermat's Little Theorem, $a^{10}=1 \Mod{11}$, $b^{16}=1 \Mod{17}$. Since $(3,10)$ are co-primes, $(3,16)$ are co-primes,
+            $g(a)=a^3\Mod{11}$ is bijective for domain and range $\{0,1,2,\ldots,10\}$, $h(b)=b^3\Mod{17}$ is bijective for domain and range $\{0,1,2,\ldots,16\}$. 
+            For each pair of $(a^3,b^3)$, there is a unique solution for $x^3 \in \{0,1,2,\ldots,186\}$. Thus $f(x)=x^3 \Mod{187}$ is bijective.
+        \end{proof}
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\question{Functional Equation}
+
+\begin{align*}
+    f(f(x)^2 + f(y)) = xf(x) + y
+\end{align*}
+
+\begin{Parts}
+    \Part Show that there exists $x_0$ such that $f(x_0)=0$. 
+    \begin{Answer}
+        Since the equation holds for all $x,y \in \R$, let $x=y=0$, the equation becomes $f(f(0)^2 + f(0)) = 0$. 
+        Let $x_0=f(0)^2 + f(0)$. We have just proved that $\exists x_0 \in \R$, $f(x_0)=0$. 
+    \end{Answer}
+
+    \Part Show that $\forall y \in \R$, $f(f(y)) = y$. 
+    \begin{Answer}
+        Let $x=x_0$ where $f(x_0)=0$. Then the equation becomes $f(f(y)) = y$. 
+    \end{Answer}
+
+    \Part $\forall g, g(g(y))=y \implies g$ is bijective. 
+    \begin{Answer}
+        \begin{itemize}
+            \item Assume $x,y \in \R, g(x)=g(y) \implies g(g(x)) = g(g(y)) \implies x = y$. $g$ is one to one. 
+            \item $\forall b \in \R, g(x) = b \implies x = g(b)$, which always has a solution for $x$. $g$ is onto. 
+        \end{itemize}
+    \end{Answer}
+
+    \Part Plug in $x=f(t)$, $x=t$. Show that $f(t)^2=t^2$ for all $t$. 
+    \begin{Answer}
+        \begin{align*}
+            x=f(t)  &\implies f(f(f(t))^2 + f(y)) = f(t)f(f(t)) + y \\
+                    &\implies f(t^2 + f(y)) = tf(t) + y \\
+            x=t     &\implies f(f(t)^2 + f(y)) = tf(t) + y
+        \end{align*}
+        Since $f(\cdot)$ is bijective, $f(f(t)^2 + f(y)) = f(t^2 + f(y)) \implies f(t)^2 + f(y) = t^2 + f(y) \implies f(t)^2=t^2$
+    \end{Answer}
+
+    \Part find all functions $f$ satisfying the equation. 
+    \begin{Answer}
+        $f(t) = t$, $f(t) = -t$, $f(t) = |t|$, $f(t) = -|t|$. 
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\question{Euler's Totient Theorem}
+
+\begin{align*}
+    a^{\phi(n)} \equiv 1 \pmod{n}
+\end{align*}
+
+\begin{Parts}
+    \Part Let the numbers less than $n$ which are coprime to $n$ be $m_1, m_2, \cdots, m_{\phi(n)}$. \\
+          Prove that $f:\{m_1, m_2, ..., m_{\phi(n)}\} \to \{m_1, m_2, ..., m_{\phi(n)}\}$ is a bijection where $f(x) := ax \pmod{n}$.
+    \begin{Answer}
+        \begin{proof}
+            First, $n$ and $a$ are co-primes $\implies \gcd(a,n)=1 \implies \exists a^{-1} \Mod{n}$. \\
+            Then consider $f(x) = ax \Mod{n}$. Let $x,y \in \{m_1, m_2, ..., m_{\phi(n)}\}$ and $f(x)=f(y)$. 
+            \begin{align*}
+                f(x) = f(y)   &\implies ax = ay \Mod{n} \\ 
+                            &\implies a(x - y) = 0 \Mod{n} \\
+                \gcd(a,n) = 1 &\implies x = y \Mod{n} \\
+                x < n, y < n  &\implies x = y 
+            \end{align*}
+            We have shown that for every $b$ in $\{m_1, m_2, ..., m_{\phi(n)}\}$ there is a distinct $x$ in $\{m_1, m_2, ..., m_{\phi(n)}\}$. Thus $f(x)$ is bijective.  
+        \end{proof}
+    \end{Answer}
+
+    \Part Prove Euler's Theorem. 
+    \begin{Answer}
+        \begin{proof}
+            Let $S = \{a \cdot m_1, a \cdot m_2, ..., a \cdot m_{\phi(n)}\}$. According to the previous part, S contains representative $\{m_1, m_2, ..., m_{\phi(n)}\} \Mod{n}$. 
+            \begin{align*}
+                (a \cdot m_1) \cdot (a \cdot m_2) \cdot (a \cdot m_3) \cdots (a \cdot m_{\phi(n)}) &= m_1 \cdot m_2 \cdot m_3 \cdots m_{\phi(n)} \Mod{n} \\
+                                       a^{\phi(n)} \cdot (m_1\cdot m_2\cdot m_3\cdots m_{\phi{n}}) &= m_1 \cdot m_2 \cdot m_3 \cdots m_{\phi(n)} \Mod{n} \\
+                                                                                       a^{\phi(n)} &= 1 \Mod{n}
+            \end{align*}
+            Thus $a^{\phi(n)} = 1 \Mod{n}$. 
+        \end{proof}
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\question{FLT Converse}
+
+$$S(n) = \{i: 1 \leq i \leq n, \texttt{gcd}(n,i) = 1\},$$
+
+\begin{Parts}
+    \Part Prove that for every $a$ and $n$ that are not relatively prime, FLT condition fails. In other words, for every $a$ and $n$ such that $\texttt{gcd}(n,a) \neq 1$, we have $a^{n-1} \not\equiv 1 \pmod{n}$.
+    \begin{Answer}
+        \begin{proof}
+            Let $\gcd(n,a)=d$ and $d \neq 1$. According to the definition of $\gcd$, $\exists p,q \in \N, \gcd(p,q) = 1, n = pd, a = qd$. 
+            $a^{n-1} \Mod{n} \equiv qd^{pd-1} \Mod{pd}$. $d \mid qd^{pd-1}, d \mid pd \implies d \mid qd^{pd-1} \Mod{pd}$. Since $d > 1$, $a^{n-1} \neq 1$. 
+            Thus we have shown that for every $a$ and $n$ that are not relatively prime, FLT fails. 
+        \end{proof}
+    \end{Answer}
+
+    \Part Prove that the FLT condition fails for most choices of $a$ and $n$. More precisely, show that if we can find a single $a \in S(n)$ such that $a^{n-1} \not \equiv 1 \pmod{n}$, we can find at least $|S(n)|/2$ such $a$.
+    \begin{Answer}
+        \begin{proof}
+            Assume a number $b$ such that $b^{n-1} = 1 \Mod{n}$. Consider $(a\cdot b)^{n-1} \equiv a^{n-1}\cdot b^{n-1} \equiv a^{n-1} \not \equiv 1 \Mod{n}$. So given any number $b$ where $b^{n-1} \equiv 1 \Mod{n}$ we can have
+            a number $ab$ where $(ab)^{n-1} \not \equiv 1$. Note that $ab \Mod{n}$ is unique for different values of $b$. This is because $\gcd(a,n) = 1 \implies f(x) = ax \Mod{n}$ is a bijection. Thus for every $b$ that passes
+            the FLT, we can have a unique $ab$ that does not pass the FLT. The number of failing values is thus at least as large as the number of passing values. We can find at least $|S(n)|/2$ such $a$. 
+        \end{proof}
+    \end{Answer}
+
+    \Part First, show that if $a \equiv b \mod m_1$ and $a \equiv b \mod m_2$, with $\gcd(m_1, m_2)=1$, then $a \equiv b \pmod{m_1 m_2}$.
+    \begin{Answer}
+        \begin{align*}
+            a \equiv b \Mod{m_1} &\implies \exists k_1, a - b = m_1k_1 \\
+            a \equiv b \Mod{m_2} &\implies \exists k_2, a - b = m_2k_2 \\
+               \gcd(m_1,m_2) = 1 &\implies m_2 \mid k_1 \\
+                                 &\implies m_1m_2 \mid a - b \\
+                                 &\implies a = b \Mod{m_1m_2}
+        \end{align*}
+    \end{Answer}
+    
+    \newpage
+    \Part Let $n = p_1 p_2 \cdots p_k$ where $p_i$ are distinct primes and $p_i - 1 \mid n - 1$ for all $i$. Show that $a^{n-1} \equiv 1 \pmod{n}$ for all $a \in S(n)$ %relatively prime to $n$.
+    \begin{Answer}
+        \begin{proof}
+            Since $p_1, p_2, \ldots, p_k$ are distinct primes, for all $1 \leq i \leq k$, we have the below equation. 
+            \begin{align*}
+                a^{n-1} \equiv a^{k(p_i - 1)} \equiv (a^{p_i - 1})^k \equiv 1 \Mod{p_i}
+            \end{align*}
+            Thus after enumerating all possible $i$ and combining them, we have $a^{n-1} \equiv 1 \Mod{n}$
+        \end{proof}
+    \end{Answer}
+
+    \Part Verify that for all $a$ coprime with 561, $a^{560} \equiv 1 \pmod{561}$.
+    \begin{Answer}
+        $561 = 3 \times 11 \times 17$. \\
+        $3 - 1 = 2, 2 \mid 560$. \\
+        $11 - 1 = 10, 10 \mid 560$. \\
+        $17 - 1 = 16, 16 \mid 560$. \\
+        $a^{560} \equiv 1 \Mod{3}, a^{560} \equiv 1 \Mod{11}, a^{560} \equiv 1 \Mod{17} \implies a^{560} \equiv 1 \Mod{561}$ 
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\question{Mechanical Chinese Remainder Theorem}
+
+\begin{align*}
+    x &\equiv 1 \Mod{2} \\
+    x &\equiv 2 \Mod{3} \\ 
+    x &\equiv 3 \Mod{5} 
+\end{align*}
+
+\begin{Parts}
+	\Part Find a number $0 \le b_2 < 30$ such that $b_2 \equiv 1 \pmod 2$, $b_2 \equiv 0 \pmod 3$, and $b_2 \equiv 0 \pmod 5$.
+    \begin{Answer}
+        $b_2 \equiv 0 \Mod{3}, b_2 \equiv 0 \Mod{5} \implies b_2 = 0 \Mod{15}$. $15^{-1} = 1 \Mod{2} \implies b_2 = 1 \times 15 = 15$.
+    \end{Answer}
+
+	\Part Find a number $0 \le b_3 < 30$ such that $b_3 \equiv 0 \pmod 2$, $b_3 \equiv 1 \pmod 3$, and $b_3 \equiv 0 \pmod 5$.
+    \begin{Answer}
+        $b_3 \equiv 0 \Mod{2}, b_3 \equiv 0 \Mod{5} \implies b_3 = 0 \Mod{10}$. $10^{-1} \Mod{3} = 1 \implies b_3 = 1 \times 10 = 10$.
+    \end{Answer}
+    
+    \Part Find a number $0 \le b_5 < 30$ such that $b_5 \equiv 0 \pmod 2$, $b_5 \equiv 0 \pmod 3$, and $b_5 \equiv 1 \pmod 5$.
+    \begin{Answer}
+        $b_5 \equiv 0 \Mod{2}, b_5 \equiv 0 \Mod{3} \implies b_5 = 0 \Mod{6}$. $6^{-1} \Mod{5} = 1 \implies b_5 = 1 \times 6 = 6$. 
+    \end{Answer}
+    
+    \Part What is $x$ in terms of $b_2$, $b_3$, and $b_5$?  Evaluate this to get a numerical value for $x$.
+    \begin{Answer}
+        $x = b_2 + 2b_3 + 3b_5 = 15 + 2 \times 10 + 3 \times 6 = 53$.
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\question{Advanced Chinese Remainder Theorem Constructions}
+
+\begin{Parts}
+    \Part Prove that for any positive integer $k$, there exists $k$ consecutive positive integer such that none of them are prime powers.
+    \begin{Answer}
+        \textbf{Claim:} $\forall k \in \N, \exists x \in \N$, where none of $\{x+1, x+2, \ldots, x+k\}$ can be written as $p^i$.
+        \begin{proof}
+            Consider the first 2k primes and we construct the following $k$ numbers...
+            \begin{align*}
+                x &\equiv -1 \Mod{p_1 \times p_2}         \implies p_1p_2           \mid x + 1 \\
+                x &\equiv -2 \Mod{p_3 \times p_4}         \implies p_3p_4           \mid x + 2 \\
+                x &\equiv -3 \Mod{p_5 \times p_6}         \implies p_5p_6           \mid x + 3 \\
+                x &\equiv -i \Mod{p_{2i-1} \times p_{2i}} \implies p_{2i - 1}p_{2i} \mid x + i \\
+                x &\equiv -k \Mod{p_{2k-1} \times p_{2k}} \implies p_{2k - 1}p_{2k} \mid x + k            
+            \end{align*}
+            Since we for the modular base we have chosen $p_1p_2, p_3p_4, p_5p_6, \ldots, p_{2k-1}p_{2k}$, all of those are coprimes. According to the Chinese Remainder Theorem, $x$ exists! 
+            Thus the k consecutive numbers $\{x+1,x+2,x+3,\ldots,x+k\}$ satisfy the requirement because each of them are divisible by at least $2$ primes. 
+        \end{proof}
+    \end{Answer}
+
+    \Part Let $f:\mathbb{N} \to \mathbb{N}$ be a function defined as $f(x) = x^3 + 4x + 1$. Prove that for any positive integer $k$, there exists a $t$ such that $f(t)$ has $k$ distinct prime divisors.
+    \begin{Answer}
+        \textbf{Claim:} $\forall k, \exists t, f(t)$ has $k$ distinct prime divisors.
+        \begin{proof}
+            Define the special prime as $p$ such that $p^2 \mid f(x)$ for some x.
+            % TODO: finish the proof. 
+        \end{proof}
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\question{Using RSA}
+ 
+\begin{Parts}
+    \Part Assuming $p=3$, $q=11$, and $e=7$, what is $d$? Calculate the exact value.
+    \begin{Answer}
+        $(p - 1)(q - 1) = 2 \times 10 = 20$. $7^{-1} \Mod{20} = 3 \implies d = 3$.
+    \end{Answer}
+
+    \Part Following part (a), what is the original message if Bob receives 4? Calculate the exact value.
+    \begin{Answer}
+        $y = 4$, $x = D(y) = y^d \Mod{N} = 4^3 \Mod{33} = 31$.  
+    \end{Answer}
+\end{Parts}
+\end{document}

@@ -1,0 +1,354 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{02}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+    \question{Sundry}
+
+    \begin{Answer}
+        I typeset the homework using \LaTeX and discussed the homework with the following people. 
+        \begin{itemize}
+            \item Yijia Chen, yijia.chen@berkeley.edu
+        \end{itemize}
+    \end{Answer}
+
+    \newpage
+    \question{Induction on Reals}
+
+    \begin{Answer}
+        We use $p_i,q_i \in \R$ to denote the height of Bug Bob after $i$ jumps assuming its initial height is $p$ or $q$. 
+        We first prove the helper claim.\\
+        \textbf{Claim:} $\forall p_0,q_0 \in \R, n \in \N_+, p_0 < q_0 \implies p_n < q_n$.
+		\begin{proof}
+			The proof will be by induction on $n$.  \\
+			\emph{Base Case:} $n = 1$, $p_1 = (p_0 + 1) / 2 < (q_0 + 1) / 2 = q_1$. The claim holds.  \\
+			\emph{Inductive Hypothesis:} Assume that $p_k < q_k$. \\
+            \emph{Inductive Step:} We must prove that $p_{k+1} < q_{k+1}$.
+            \begin{align*}
+				p_{k+1}=\frac{p_k+1}{2}=\frac{p_k}{2}+\frac{1}{2}<\frac{q_k}{2}+\frac{1}{2}=\frac{q_k+1}{2}=q_{k+1}
+            \end{align*}
+            Therefore, the claim is true.
+        \end{proof}
+        Thus, $\forall h_0 \in \R$, as long as we can prove that Bob will fall into Sally's net in a finite
+        number of seconds with the initial height of $\ceil{h_0}$, we can prove that Bob will fall into Sally's
+        net in a finite number of seconds. In short, $P(\ceil{h_0}) \implies P(h_0)$. \\ 
+        \textbf{Claim:} $\forall h_0 \in \R$, $h_i=(h_{i-1}+1)/2$, $(\exists q \in \N)(h_q \leq 2)$.
+        \begin{proof}
+            The proof will be by induction on $\ceil{h_0}$. Note that $\ceil{h_0} \in \N$. \\
+            \emph{Base Case:} $\ceil{h_0} = 3 \iff 2<h_0\leq 3 \iff 1.5<h_1\leq 2$. The claim holds. \\
+            \emph{Inductive Hypothesis:} Assume the claim holds for all $h$ such that $3 \leq \ceil{h} < \ceil{h_0}$. \\
+            \emph{Inductive Step:} We must show that the claim holds for $\ceil{h_0}$. 
+            \begin{align*}
+                h_0-h_1=h0-(h_0+1)/2=\frac{h_0-1}{2}>1\iff \ceil{h_0}>3 \iff h_0>3
+            \end{align*}
+            Thus $\ceil{h_1}<\ceil{h_0}$. Thus, using one more seconds than the case of $h_1$, Bob will also fall into
+            Sally's net in the case of $h_0$. Combining the claim we proved above, we conclude. 
+        \end{proof}
+    \end{Answer}
+
+    \newpage
+    \question{Grid Induction}
+
+    \begin{Answer}
+        We can observe that no matter however the the Pacman goes, the sum of his coordinates always reduces by one. 
+        We are thus going to prove the strengthened claim below. \\
+        \textbf{Claim:} For a Pacman on $(i,j)$, after $i+j$ walks he will reach $(0,0)$.
+        \begin{proof}
+            Let $n=i+j$. This proof will be by induction on $n$. \\
+            \emph{Base Case:} $n=1$, the Pacman is at $(0,1)$ or $(1,0)$. After $1$ step, the Pacman will be at $(0,0)$. \\
+            \emph{Inductive Hypothesis:} Assume when $n=k(k>1)$, after $k$ steps, the Pacman will be at $(0,0)$. \\
+            \emph{Inductive Step:} We must show that when $n=k+1$, after $k+1$ steps, the Pacman will be at $(0,0)$. 
+            As $k+1=i+j$, after $1$ step, the Pacman will be at either $(i-1,j)$ or $(i,j-1)$. In either cases, $i+j-1=k$.
+            According to the inductive hypothesis, we know that after $k$ steps the Pacman will be at $(0,0)$. \\ 
+            We conclude that the claim is true. 
+        \end{proof}
+    \end{Answer}
+
+    \newpage
+    \question{Stable Marriage}
+
+    \begin{Parts}
+        \Part Run on this instance. Show each day of the algorithm, and give the resulting matching. 
+
+        \begin{Answer}
+            \begin{itemize}
+                \item Day 1. $A,B,C$ proposes to $1$, $D$ proposes to $3$. $1$ rejects $B,C$ and puts $A$ on the string. $3$ puts $D$ on the string. 
+                \item Day 2. $B,C$ proposes to $3$. $3$ rejects $C,D$ and puts $B$ on the string. 
+                \item Day 3. $C$ proposes to $2$, $D$ proposes to $1$. $2$ puts $C$ on the string, $1$ rejects $A$ and accepts $D$. 
+                \item Day 4. $A$ proposes to $2$. $2$ rejects $C$ and accepts $A$. 
+                \item Day 5. $C$ proposes to $4$. $4$ puts C on the string. $3$ accepts $B$. $4$ accepts $C$. 
+            \end{itemize}
+            The final pairing would be $\{(D,1),(A,2),(B,3),(C,4)\}$.
+        \end{Answer}
+
+        \Part Prove that the modification will not change what pairing the algorithm outputs. 
+
+        \begin{Answer}
+            \begin{proof}
+                Suppose that the modification will change the pairing the algorithm outputs. Suppose that $\{b^*, g^*\}$ and $\{b, g\}$ 
+                are paired in the output of the algorithm before the modification; in the new pairing output, boy $b$ and girl $g^*$ got 
+                paired together. We'll continue the proof by cases.
+                \begin{itemize}
+                    \item $b$ and $g^*$ end up together because $g^*$ rejects $b^*$. \\
+                          Assume $g^*$ is the first girl running into this situation. We know that $g^*$ prefers $b$ to $b^*$. However, in
+                          the original pairing $g^*$ didn't end up together with $b$ because $b$ never proposed to $g^*$ before he proposed 
+                          to his partner $g$. Thus in the new pairing, $b$ proposes to $g^*$ because he was rejected by his original partner
+                          $g$. This is a contradiction of the well ordering principle. 
+                    \item $b$ and $g^*$ end up together because $g^*$ didn't receive the proposal from $b^*$. \\
+                          Assume $g^*$ is the first girl running into this situation. We know that $g^*$ prefers $b^*$ to $b$. However, in 
+                          the current pairing $b^*$ didn't propose to $g^*$ because he was accepted by another girl. The fact that this girl
+                          rejected him in the original pairing indicates that her original date didn't propose to her in the new pairing. This
+                          is a contradiction of the well ordering principle.  
+                \end{itemize}
+                As a result, the order of proposal does not affect the final pairing. Thus, the relaxation of boys' rules will not affect 
+                the final output of the algorithm.
+            \end{proof}
+        \end{Answer}
+
+    \end{Parts}
+
+    \newpage
+    \question{The Better Stable Matching}
+
+    \begin{Parts}
+
+        \Part $R=\{(A,4),(B,3),(C,1),(D,2)\}$, $R'=\{(A,3),(B,4),(C,2),(D,1)\}$
+
+        \begin{Answer}
+            $R \land R' = \{(A,3),(B,4),(C,1),(D,2)\}$. $R \land R'$ is also stable because there is no rogue couple in the pairing. 
+        \end{Answer}
+
+        \Part Prove that for any matchings $R,R'$, no man prefers $R$ or $R'$ to $R \land R'$. 
+
+        \begin{Answer}
+            \begin{proof}
+                We will proceed the proof by contradiction. \\
+                We assume that there exists a man that prefers $R$ or $R'$ to $R \land R'$. \\
+                We assume that the man $m$'s date in $R$ is $g$, and his date in $R'$ is $g'$. 
+                \begin{itemize}
+                    \item If $m$ prefers $R$, then $m$'s date in $R \land R'$ must be $g'$ and $m$ must prefer $g$ to $g'$. According to 
+                    the definition of $R \land R'$, however, $m$ must prefer $g'$ to $g$. There is a contradiction. 
+                    \item If $m$ prefers $R'$, then $m$'s date in $R \land R'$ must be $g$ and $m$ must prefer $g'$ to $g$. According to 
+                    the definition of $R \land R'$, however, $m$ must prefer $g$ to $g'$. There is a contradiction. 
+                \end{itemize}
+                Thus we come to conclude that for any matchings $R,R'$, no man prefers $R$ or $R'$ to $R \land R'$. 
+            \end{proof}
+        \end{Answer}
+
+        \Part $m$ prefers $R$ to $R'$ and $w$ prefers $R'$ to $R$; or $m$ prefers $R'$ to $R$ and $w$ prefers $R$ to $R'$.
+        
+        \begin{Answer}
+            \begin{proof}
+                Let $M$ and $W$ denote the sets of mens and women respectively that prefer $R$ to $R'$, and $M'$ and $W'$ the sets of 
+                men and women that prefer $R'$ to $R$.
+
+                First we note that $|M|+|M'|=|W|+|W'|$. For each man $m$, he either prefers $R$ or $R'$. Let $n$ be the total number 
+                of men or women. $|M|+|M'|=n$ and $|W|+|W'|=n$. Thus $|M|+|M'|=|W|+|W'|$.
+
+                We then observe that $|M|\leq|W'|$. For every man $m$ in $M$, $g$ is $m$'s date in $R$ and $g^*$ is $m$'s date in $R'$. 
+                $m \in M \implies$ $m$ prefers $g$ to $g^*$. Let $m^*$ be $g^*$'s date in $R$. If $g^*$ prefers $m^*$, $(m,g^*)\in R'$ 
+                will become a rogue couple because they both prefer someone else. This contradicts the fact that $R'$ is stable. Thus 
+                $m \in M \implies g^* \in W'$. As a result, $|M|\leq|W'|$. The same logic proves that $|M'|\leq|W|$.
+
+                Considering $|M|+|M'|=|W|+|W'|$ we see that $|M'|=|W|$ and $|M|=|W'|$. Thus for all men in $M$, all their dates are in 
+                $W'$, and for all men not in $M$, they must be in $M'$, and their dates must be in $|W|$. The claim is proved. 
+            \end{proof}
+        \end{Answer}
+
+        \Part for any stable $R$ and $R'$, $R \land R'$ is also a matching and it is stable.
+
+        \begin{Answer}
+            \textbf{Claim:} $R \land R'$ is a matching. 
+            \begin{proof}
+                We will proceed by contradiction. \\ 
+                \emph{Negation of Conclusion:} We assume that $R \land R'$ is not a matching. \\
+                \emph{Proof by cases:} If $R \land R'$ is not a matching, one of the below cases must hold.
+                \begin{itemize}
+                    \item Two boys $b_1,b_2$ both end up with $g_1$.
+                        \begin{itemize}
+                            \item $(b_1,g_1)\in R \land (b_2,g_1)\in R'$. Thus $b_1$ prefers $R$ and $b_2$ prefers $R'$. However, 
+                            according to part (c), $g_1$ would prefer $R$ and $R'$. We reach a contradiction. 
+                            \item $(b_2,g_1)\in R \land (b_1,g_1)\in R'$. Thus $b_2$ prefers $R$ and $b_1$ prefers $R'$. However, 
+                            according to part (c), $g_1$ would prefer $R$ and $R'$. We reach a contradiction. 
+                        \end{itemize} 
+                    \item Two girls $g_1,g_2$ both end up with $b_1$.
+                        \begin{itemize}
+                            \item $(b_1,g_1)\in R \land (b_1,g_2)\in R'$. Thus $g_1$ prefers $R$ and $g_2$ prefers $R'$. However, 
+                            according to part (c), $b_1$ would prefer $R$ and $R'$. We reach a contradiction. 
+                            \item $(b_1,g_2)\in R \land (b_1,g_1)\in R'$. Thus $g_2$ prefers $R$ and $g_1$ prefers $R'$. However, 
+                            according to part (c), $b_1$ would prefer $R$ and $R'$. We reach a contradiction. 
+                        \end{itemize} 
+                \end{itemize}
+                Thus, $R \land R'$ must be a matching. 
+            \end{proof}
+
+            \textbf{Claim:} $R \land R'$ is stable. 
+            \begin{proof}
+                We will proceed by contradiction. \\
+                \emph{Negation of Conclusion:} We assume that $R \land R'$ is not stable. \\
+                There exists two pairs $(b,g),(b^*,g^*)$ in $R \land R'$ where $b$ prefers $g^*$ to $g$ and $g^*$ prefers $b$ to $b^*$. 
+                If $b$ prefers $R$, then in $R'$, $b$'s date is either $g$ or a $g'$ $b$ likes less. Since $R$ and $R'$ are stable and 
+                $(b,g) \in R$, then $(b^*,g^*) \in R'$. In $R'$, $b$ and $g^*$ still form a rouge couple because $g^*$ likes $b$ better 
+                than $b^*$ and since $b$'s current date is at most as good as $g$, $b$ still prefers $g^*$. This contradicts the fact 
+                that $R'$ is stable. The same contradiction can be derived if we assume $b$ prefers $R'$. \\
+                We can conclude that $R \land R'$ is stable. 
+            \end{proof}
+        \end{Answer}
+
+    \end{Parts}
+
+    \newpage
+    \question{Examples or It's Impossible}
+
+    \begin{Parts}
+        
+        \Part Every man get his first choice. 
+
+        \begin{Answer}
+            \begin{center}
+                \begin{tabular}{|c|c||c|c|}\hline
+                    men&preferences&women & preferences \\
+                    \hline
+                    A& 1$>$2$>$3 &1& A$>$B$>$C \\
+                    \hline
+                    B& 2$>$3$>$1 &2& B$>$C$>$A \\
+                    \hline
+                    C& 3$>$1$>$2 &3& C$>$A$>$B \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        \end{Answer}
+
+        \Part Every women gets her first choice, even though her first choice does not prefer her the most.
+        
+        \begin{Answer}
+            \begin{center}
+                \begin{tabular}{|c|c||c|c|}\hline
+                    men&preferences&women & preferences \\
+                    \hline
+                    A& 3$>$1$>$2 &1& A$>$B$>$C \\
+                    \hline
+                    B& 1$>$2$>$3 &2& B$>$C$>$A \\
+                    \hline
+                    C& 1$>$3$>$2 &3& C$>$A$>$B \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        \end{Answer}
+
+        \Part Every woman gets her last choice. 
+
+        \begin{Answer}
+            \begin{center}
+                \begin{tabular}{|c|c||c|c|}\hline
+                    men&preferences&women & preferences \\
+                    \hline
+                    A& 2$>$3$>$1 &1& A$>$B$>$C \\
+                    \hline
+                    B& 3$>$1$>$2 &2& B$>$C$>$A \\
+                    \hline
+                    C& 1$>$2$>$3 &3& C$>$A$>$B \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        \end{Answer}
+
+        \Part Every man gets his last choice.
+
+        \begin{Answer}
+            Not possible. \\
+            \textbf{Claim:} It's impossible that every man gets his last choice. 
+            \begin{proof}
+                We will proceed by contradiction. \\
+                Assume every man gets his last choice. Then on the last day every man proposes to his least favorable woman. 
+                As a result, before the last day, every man has been rejected by $n-1$ women, and every woman has rejected $n-1$ 
+                man. However, the fact that every women has rejected at least one man indicates that there has been a day when
+                every woman has been paired with some man and the algorithm should have terminated earlier. Thus we arrive at a 
+                contradiction and the claim holds.  
+            \end{proof}
+        \end{Answer}
+
+        \Part A man who is second on every women's list gets his last choice. 
+
+        \begin{Answer}
+            Possible. Example given below.
+            \begin{center}
+                \begin{tabular}{|c|c||c|c|}\hline
+                    men&preferences&women & preferences \\
+                    \hline
+                    A& 1$>$3$>$2 &1& A$>$B$>$C \\
+                    \hline
+                    B& 2$>$1$>$3 &2& C$>$B$>$A \\
+                    \hline
+                    C& 2$>$1$>$3 &3& A$>$B$>$C \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        \end{Answer}
+
+    \end{Parts}
+
+    \newpage
+    \question{Short Answer: Graphs}
+
+    \begin{Parts}
+
+        \Part connected components?
+
+        \begin{Answer}
+            3
+        \end{Answer}
+
+        \Part edges removed? 
+
+        \begin{Answer}
+            7
+        \end{Answer}
+        
+        \Part True or False? 
+
+        \begin{Answer}
+            False. \\
+            An n-dimensional hyper-cube has $f(n)=2^{n-1}+2f(n-1)$ edges, while $K_n$ has $g(n)=n(n-1)/2$ edges. 
+            We will prove the following claim. \\
+            \textbf{Claim:} $n\geq3 \implies f(n) > g(n)$.
+            \begin{proof}
+                The proof will be by induction on $n$. \\
+                \emph{Base case:} $n=3$, $f(3)=12$, $g(3)=3$. \\
+                \emph{Inductive hypothesis:} Assume $n=k$, $f(k)>g(k)$. \\
+                \emph{Inductive step:} We must show that $f(k+1)>g(k+1)$. 
+                \begin{align*}
+                    f(k+1)=2^k+2f(k)>2^k+2g(k)=2^k+k(k-1)=(2^k-2k)+2g(k+1)>g(k+1)
+                \end{align*}
+                Thus we know that an n-dimensional hyper-cube has more edges than a $K_n$. 
+            \end{proof}
+        \end{Answer}
+
+        \Part number of cycles to cover a complete graph. 
+
+        \begin{Answer}
+            $\frac{n-1}{2}$
+        \end{Answer}
+
+        \Part Give a set of edge-disjoint Hamiltonian cycles that covers the edges of K5.
+        
+        \begin{Answer}
+            \begin{itemize}
+                \item Cycle 1: $(0,1),(1,2),(2,3),(3,4),(4,0)$
+                \item Cycle 2: $(0,2),(2,4),(4,1),(1,3),(3,0)$
+            \end{itemize}
+        \end{Answer}
+    \end{Parts}
+\end{document}

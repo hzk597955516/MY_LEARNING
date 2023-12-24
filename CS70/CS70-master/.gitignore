@@ -1,0 +1,10 @@
+*.pdf
+*.synctex.gz
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+.vscode
+.idea
+.DS_Store

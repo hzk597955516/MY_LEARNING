@@ -1,0 +1,301 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{03}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\renewcommand*{\bmod}{\mathbin{\%}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+\section*{Sundry}
+
+\begin{Answer}
+    I typeset the homework using \LaTeX and discussed the problems with the following people. 
+    \begin{itemize}
+        \item Yijia Chen -- yijia.chen@berkeley.edu
+    \end{itemize}
+\end{Answer}
+
+\newpage
+\question{Leaves in a Tree}
+
+\begin{Parts}
+    \Part What is the largest possible number of leaves the tree could have?
+    \begin{Answer}
+        The largest possible number of leaves a tree could have is $n-1$. \\
+        \textbf{Claim:} $m=n-1$ is achievable, and there cannot exist a tree with more than $m$ leaves.
+        \begin{proof}
+            The proof will be by the induction on $n$. \\
+            \emph{Base Case:} $n=3$. $V=\{v_1,v_2,v_3\}$, $E=\{(v_1,v_2),(v_1,v_3)\}$. $G=(V,E)$ has 2 leaves. \\
+            \emph{Inductive Hypothesis:} $n=k$, $m=k-1$ is achievable and no tree has more than $m$ leaves. \\
+            \emph{Inductive Step:} $n=k+1$, we consider the original graph $G_k$ and insert the $k+1^{th}$ vertex. 
+                                   For any graph, the total degree of vertices is $2|E|$. The $k-1$ leaves in $G_k$
+                                   take up $k-1$ degrees, leaving the remaining vertex $v$ a degree of $k-1$. For the
+                                   $k+1^{th}$ vertex, we use $1$ edge to connect it to $v$ so that it becomes another 
+                                   leave. Now $G_{k+1}$ has $k$ leaves because it has one more leaf that $G_k$. If there
+                                   are more than $k$ leaves, there can only be $k+1$ leaves because the total number of 
+                                   vertices is $k+1$. However, all nodes are leaves implies that the total degree of 
+                                   the graph is $k+1$. Obviously $k+1 \neq 2k$ when $k \geq 3$. Thus we have contradiction.\\
+            We conclude that $m=n-1$ is achievable, and no tree with $n$ vertices has more than $m$ leaves. 
+        \end{proof}
+    \end{Answer}
+
+    \Part Prove that every tree on $n\geq 2$ vertices must have at least 2 leaves. 
+    \begin{Answer}
+        \textbf{Claim:} Every tree on $n\geq 2$ vertices must have at least 2 leaves. 
+        \begin{proof}
+            We will prove the claim by contradiction. \\ 
+            Assume that some tree has less than $2$ leaves. According to the definition of trees, $|E|=|V|-1$ and for any
+            graph, the sum of degrees of nodes is $2|E|=2|V|-2=2n-2$. The tree can have either $1$ or $0$ leaves.
+            \begin{itemize}
+                \item The tree has $1$ leaf. The sum of degrees of the tree is at least $1+2(n-1)=2n-1$. 
+                \item The tree has $0$ leaf. The sum of degrees of the tree is at least $2n$. 
+            \end{itemize}
+            Both circumstances contradicts the fact that the total degrees of vertices is $2n-2$. Thus by contradiction
+            we conclude that every tree on $n \geq 2$ vertices must have at least 2 leaves.  
+        \end{proof}
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\question{Coloring Trees}
+
+\begin{Parts}
+    \Part What is the minimum number of colors needed to color a tree? Prove it. 
+    \begin{Answer}
+        \textbf{Claim:} The minimum number of colors needed to color a tree is $2$. 
+        \begin{proof}
+            The proof will be by the induction on $n$. \\
+            \emph{Base Case:} $n \leq 2$, the tree can be trivially colored by $2$ colors. \\
+            \emph{Inductive Hypothesis:} Any tree with $k$ vertices can be two-colored. \\
+            \emph{Inductive Step:} We must show that any tree $G$ with $k+1$ vertices can be two-colored. \\
+            We have proved in question $1$ that every tree has at least two leaves. For any tree on $k+1$
+            vertices, we choose a leaf $v$ and its adjacent vertex $v^*$. We color $v$ blue and $v^*$ red.
+            Then we remove $v$ from $G$. It can be seen that $G-v$ is still a tree because we have removed 
+            exactly one vertex and one edge and $|V|=|E|+1$ still holds for $G-v$. Thus according to the 
+            inductive hypothesis we can color $G-v$ using two colors and we just color $v$ and $v^*$ differently. \\
+            Thus we conclude that the minimum number of colors needed to color a tree is $2$. 
+        \end{proof}
+    \end{Answer}
+
+    \Part Prove that all trees are bipartite. 
+    \begin{Answer}
+        \textbf{Claim:} All trees are bipartite. 
+        \begin{proof}
+            We will prove the claim directly. \\
+            Since we have proved in part (a) that all trees can be two-colored, we assume that we have colored
+            a tree on $n$ vertices using blue and red. We group all blue vertices into one group and all red
+            vertices into another group. For the coloring to be valid, there does not exists an edge $e(u,v)$
+            such that both $u,v$ are colored blue or both $u,v$ are colored red. That is to say, no edge connects
+            any two node in the same group. All edges in the tree goes from the blue group to the red group. \\
+            We conclude that all trees are bipartite. 
+        \end{proof}
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\question{Edge-Disjoint Paths in a Hypercube}
+
+\begin{Answer}
+    \textbf{Claim:} Between any two distinct vertices in the $n$-dimensional hypercube, there are at least $n$ 
+    edge-disjoint paths from $x$ to $y$.
+    \begin{proof}
+        The proof will be by the induction on $n$. \\
+        \emph{Base Case:} $n=2$, $G$ is a square. We can go left and right from any vertex to reach the target. \\
+        \emph{Inductive Hypothesis:} Assume there are at least $k$ edge-disjoint paths from $x$ to $y$ ($x \neq y$). \\
+        \emph{Inductive Step:} We must prove that there are at least $k+1$ edge-disjoint paths from $x$ to $y$ ($x \neq y$) 
+        in a $k+1$-dimensional hypercube. According to the recursive definition of hypercubes, one of the below two cases must hold. 
+        \begin{itemize}
+            \item $x,y$ belongs to the same $k$-dimensional hypercube. \\
+                  According to the inductive hypothesis, there are at least $k$ edge-disjoint paths from $x$ to $y$ 
+                  within the same hypercube they belong to. Since the $k+1$ dimensional hypercube is defined by 
+                  building an edge between each pair of corresponding vertices in two sub-hypercubes, we can define 
+                  the corresponding vertices of $x,y$ in the other hypercube as $x^*,y^*$, and it is trivial that 
+                  there is at least one path from $x^*$ to $y^*$. Thus, one additional path from $x$ to $y$ is formed
+                  by going from $x$ to $x^*$ and pick a path from $x^*$ to $y^*$ and then go from $y^*$ to $y$. This
+                  path does not pass any edge on the hypercube that $x,y$ belong to; as a result, it is a valid 
+                  edge-disjoint path compared to the original $k$ edge-disjoint paths within the $k$-dimensional hypercube. 
+                  We have by far found at least $k+1$ edge-disjoint paths from $x$ to $y$. 
+            \item $x,y$ belongs to different $k$-dimensional hypercubes. \\
+                  Assume that $x$ belongs to sub-hypercube $H_1$ and $y$ belongs to $H_2$. Let $x$'s corresponding vertex
+                  on $H_2$ be $x^*$ and $y$'s corresponding vertex on $H_1$ be $y^*$. 
+                  \begin{itemize}
+                      \item $x^*=y$. $x$ has $k$ neighbors in $H_1$. $k$ edge-disjoint paths can be found by first going 
+                            to those neighbors, then go to their corresponding vertices in $H_2$, then converge back to $y$. The
+                            $k+1$th path is the edge connecting $x$ and $x^*$, which is $y$.
+                      \item $x^*\neq y$. We first map out the $k$ paths from $x$ to $y^*$ within $H_1$. Our final goal is to arrive 
+                            at $y$. We first find the $k+1^{th}$ path by sending $x$ to $x^*$ and build a path from $x^*$ to $y$. 
+                            In the rest $k$ paths, there must be one that can be mirrored to that from $x^*$ to $y$. For that path 
+                            we finish the mirror path in $H_1$ from $x$ to $y^*$ and then send $y^*$ to $y$. For the rest $k-1$ paths,
+                            we send $x$'s neighbors to their corresponding nodes and finish the mirror path on $H_2$. 
+                  \end{itemize}
+        \end{itemize}
+        We can now conclude that between any two distinct vertices in the $n$-dimensional hypercube, there are at least $n$ 
+        edge-disjoint paths from $x$ to $y$.
+    \end{proof}
+\end{Answer}
+
+\newpage
+\question{Triangulated Planar Graph}
+
+\begin{Parts}
+    \Part What is the sum of the charges on all the vertices? 
+    \begin{Answer}
+        12. According to the definition of the graph, each face $f$ is surrounded by exactly $3$ edges. Since each edge touches 
+        on two faces exactly, we have $e=3f/2$. Since this is a planar graph, we also have $e+2=f+v$. Thus $f=2v-4$, $e=3v-6$. 
+        The sum of degrees of all vertices is $2e$. Thus the total sum of charges is $6v-2e=6v-6v+12=12$.
+    \end{Answer}
+
+    \Part What is the charge of a degree $5$ vertex and of a degree $6$ vertex. 
+    \begin{Answer}
+        The charge of a degree $5$ vertex is $1$. \\
+        The charge of a degree $6$ vertex is $0$. 
+    \end{Answer}
+    
+    \Part After discharging all degree $5$ vertices, there's a degree $5$ vertex with positive remaining charge. 
+    \begin{Answer}
+        \begin{proof}
+            Assume a degree $5$ vertex with a positive remaining charge is $u$. The assumption above implies that
+            there exists a neighbor $v$ such that charge$(v) \geq 0$, i.e. degree$(v)$ $\leq 6$.
+            \begin{itemize}
+                \item degree$(v)=6$, a degree 5 and a degree 6 vertices are adjacent. 
+                \item degree$(v)=5$, two degree 5 vertices are adjacent. 
+                \item degree$(v)<5$, there exists a vertex of degree $1,2,3,$ or $4$. 
+            \end{itemize}
+            We conclude the claim in the prompt.
+        \end{proof}
+    \end{Answer}
+
+    \Part No degree $5$ vertex with positive remaining charge. Any $v$ with positive charge? Possible degrees?
+    \begin{Answer}
+        We enumerate the below possible cases. 
+        \begin{itemize}
+            \item It's simply possible for degree$(v)<5$.
+            \item It's impossible for degree$(v)=6$ because $v$ is not affected during discharging and charge$(v)$ remains to be $0$. 
+            \item It's also impossible for degree$(v)>7$.  At least $1-5\cdot$charge$(v)$ degree $5$ neighbors are 
+                  required for $v$ to receive enough charge. $1-5\cdot$charge$(v)=5\cdot$degree$(v)-29>$ degree$(v)$ when $v>7$. 
+                  There will never be enough neighbors for $v$ to gain enough charge.
+        \end{itemize}
+        Thus we conclude that degree$(v)$ is $1,2,3,4$ or $7$. 
+    \end{Answer}
+
+    \newpage
+    \Part Suppose there exists a degree 7 vertex with positive charge after discharging the degree 5 vertices. How many neighbors of degree 5 might it have?
+    \begin{Answer}
+        It has 6 or 7 neighbors of degree 5 vertices. 
+    \end{Answer}
+
+    \Part Are two of these degree 5 vertices adjacent?
+    \begin{Answer}
+        For the graph to be triangulated, there must be a cycle that connects all neighbors of $v$. That means
+        there exists and edge $e(x,y)$ such that degree$(x)=$ degree$(y)=5$. When discharging, $x$ and $y$ 
+        give out at most $4$ fifths of their charges because they don't give out their charges to each other. 
+        This contradicts that no degree 5 vertex has a positive remaining charge. 
+    \end{Answer}
+
+    \Part Finish the proof from the facts you obtained from the previous parts.
+    \begin{Answer}
+        \begin{proof}
+            We will prove the claim by cases.\\
+            After discharging all degree 5 vertices, one of the below two cases must hold. 
+            \begin{itemize}
+                \item There's a degree $5$ vertex with positive remaining charge. \\
+                      It has been shown in part (c) that the claim holds. 
+                \item There's no degree $5$ vertex with positive remaining charge. \\
+                      There must exist some vertex $v$ whose charge is positive because the total sum of charges 
+                      of all vertices remains to be 12 after discharging. From part (d) we know that the possible 
+                      degrees of $v$ are $1,2,3,4,7$. However, from parts (e) and (f) we learn that the degree of $v$
+                      cannot be 7 in order for the graph to be triangulated. We now know that there exists a $v$ 
+                      whose degree is $1,2,3,4$. 
+            \end{itemize}
+            The claim holds after combining the two cases. Thus we conclude that every triangulated planar graph 
+            contains either (1) a vertex of degree 1, 2, 3, 4, (2) two degree 5 vertices which are adjacent, or 
+            (3) a degree 5 and a degree 6 vertices which are adjacent.
+        \end{proof}
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\question{Euclid's Algorithm}
+
+\begin{Parts}
+    \Part $\gcd(527,323)$.
+    \begin{Answer}
+        \begin{align*}
+            \gcd(527,323) &= \gcd(323,527\bmod 323) = \gcd(323,205) \\
+                          &= \gcd(205,323\bmod 205) = \gcd(205,118) \\
+                          &= \gcd(118,205\bmod 118) = \gcd(118,87) \\
+                          &= \gcd(87,118\bmod 87) = \gcd(87,31) \\
+                          &= \gcd(31,87\bmod 31) = \gcd(31,25) \\
+                          &= \gcd(25,31\bmod 25) = \gcd(25,6) \\
+                          &= \gcd(6,25\bmod 6) = \gcd(6,1) \\
+                          &= 1
+        \end{align*}
+    \end{Answer}
+
+    \Part Find multiplicative inverse of $5\Mod{27}$. 
+    \begin{Answer}
+        This is the same as solving $27x+5y=1$ using extended Euclid's Algorithm. 
+        \begin{align*}
+            \gcd(27,5) &= \gcd(5,2) = \gcd(2,1) = \gcd(1,0) \\
+            \gcd(1,0)  &= (1, 1, 0) \\
+            \gcd(2,1)  &= (1, 0, 1) \\
+            \gcd(5,2)  &= (1, 1, -2) \\
+            \gcd(27,5) &= (1, -2, 11)
+        \end{align*}
+        $x=-2,y=11$. We now know that the multiplicative inverse of $5\Mod{27}$ is $11$. 
+    \end{Answer}
+
+    \Part Find $x \pmod{27}$ if $5x + 26 \equiv 3 \pmod{27}$. 
+    \begin{Answer}
+        \begin{align*}
+            5x + 26 &\equiv 3 \Mod{27} \\
+            5x - 1  &\equiv 3 \Mod{27} \\
+            5x      &\equiv 4 \Mod{27} \\
+            x       &\equiv 4\times 11 \Mod{27} \\
+            x       &\equiv 17 \Mod{27}
+        \end{align*}
+    \end{Answer}
+
+    \Part If $a$ has no multiplicative inverse mod $c$, then $ax \equiv b \pmod{c}$ has no solution.
+    \begin{Answer}
+        The claim is false. We disprove by giving counterexamples to the claim. \\
+        Suppose $a=3,b=6,c=9$. $a$ doesn't have a multiplicative inverse $\Mod{c}$ since $\gcd(a,c)=3$. 
+        However, $x=2$ is a solution to the equation $ax\equiv b \Mod{c}$. 
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\question{Fibonacci GCD}
+
+\begin{Answer}
+    \textbf{Claim:} $F_0=0$, $F_1=1$.$F_n=F_{n-1}+F_{n-2}$. $\forall n\geq 0$, $\gcd(F_n,F_{n-1})=1$.
+    \begin{proof}
+        The proof will be by the induction on $n$. \\
+        \emph{Base Case:} $n=1$, $\gcd(F_0,F_1)=\gcd(0,1)=1$. \\
+        \emph{Inductive Hypothesis:} $n\geq 2$, assume $\gcd(F_{n-1},F_{n-2})=1$ is true. \\
+        \emph{Inductive Step:} We must show that $\gcd(F_n,F_{n-1})=1$ is true. \\ 
+        $F_{n-2}<F_{n-1} \implies F_n=F_{n-2}+F_{n-1}<2F_{n-1}$. \\
+        $2F_{n-1}>F_n>F_{n-1} \implies \floor{F_n/F_{n-1}}=1 \implies F_n\bmod F_{n-1}=F_n-F_{n-1}$. \\
+        According to Euclid's Algorithm: 
+        \begin{align*}
+            \gcd(F_n,F_{n-1}) &= \gcd(F_{n-1},F_n\bmod F_{n-1}) \\
+                              &= \gcd(F_{n-1},F_n-F_{n-1}) \\
+                              &= \gcd(F_{n-1},F_{n-2}) \\
+                              &= 1
+        \end{align*}
+        We conclude that in a Fibonacci sequence, for all $n \geq 0$, $\gcd(F_n, F_{n-1})=1$.
+    \end{proof}
+\end{Answer}
+\end{document}

@@ -1,0 +1,233 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{12}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\DeclareMathOperator{\di}{d\!}
+\newcommand*\Eval[3]{\left.#1\right\rvert_{#2}^{#3}}
+
+\renewcommand*{\bmod}{\mathbin{\%}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+\section*{Sundry}
+
+\begin{Answer}
+    I typeset the homework using \LaTeX and discussed the problems with the following people.
+    \begin{itemize}
+        \item Yijia Chen -- yijia.chen@berkeley.edu
+    \end{itemize}
+\end{Answer}
+
+\newpage
+\Question{A Meeting of Three}
+
+\begin{Answer}
+    We assume an arbitrary order for the three people and multiply the probability for that particular 
+    order by $6$. Now we only have to guarantee that that probability that the last person comes within 
+    five minutes after the first person comes. We choose $x$ to be the time gap between the arrival of 
+    the first person and that of the second. $x$ can have a value from $0$ to $\frac{1}{4}$. For each 
+    determined $x$, we can choose the first arrival from $0$ to $1-x$ and the second arrival from 
+    the first arrival to the second arrival, which has range $x$. Thus we have the following. 
+    \begin{align*}
+        P &= 6\int_0^{\frac{1}{4}} x(1-x) dx \\
+          &= \Eval{\frac{1}{2}x^2 - \frac{1}{3}x^3}{0}{\frac{1}{4}} \\
+          &= \frac{1}{3} \times \frac{1}{16} - \frac{1}{192} \\
+          &= \frac{5}{32}
+    \end{align*}
+\end{Answer}
+
+\newpage
+\Question{Exponential Practice}
+
+\begin{Parts}
+    
+    \Part Calculate the density of $Y = X_1 + X_2$.
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[X_1 \leq x] &= \Pr[X_2 \leq x] = 1 - e^{-\lambda x} = 1 - \Pr[X_1 > x] \\
+            \Pr[Y \leq y]   &= \int_0^y ((1 - e^{-\lambda(y - x)})\lambda e^{-\lambda x}) dx \\
+                            &= \int_0^y (\lambda e^{-\lambda x} - \lambda e^{-\lambda y} )dx \\
+                            &= \Eval{-e^{-\lambda x} - \lambda x e^{-\lambda y}}{0}{y} \\
+                            &= 1 - e^{-\lambda y} - \lambda y e^{-\lambda y} \\
+            \Pr[Y = y]      &= \begin{cases}
+                \lambda^2 ye^{-\lambda y} &, y \geq 0 \\
+                0                         &, y < 0
+            \end{cases}
+        \end{align*}
+    \end{Answer}
+
+    \Part What is the density of $X_1$, conditioned on $X_1 + X_2 = t$?
+
+    \begin{Answer}
+        We introduce a new variable $\epsilon$ and then perform integration it. 
+        \begin{align*}
+            \Pr[X_1 \leq x | Y=y]                      &= \frac{\Pr[X_1 \leq x \cup Y \in [y, y+\epsilon]]}{\Pr[Y \in [y, y+\epsilon]]} \\
+            \Pr[Y \in [y, y+\epsilon]]                 &= -(1 + \lambda(y + \epsilon)) e^{-\lambda (y+\epsilon)} + (1 + \lambda y)e^{-\lambda y} \\
+            \Pr[X_1 \leq x \cup Y \in [y, y+\epsilon]] &= \int_0^x \lambda e^{-\lambda x} (e^{-\lambda(y-x)} - e^{-\lambda(y + \epsilon -x)}) dx \\
+                                                       &= \lambda x (e^{-\lambda x} - e^{-\lambda(x + \epsilon)}) \\
+            \Pr[X_1 \leq x | Y \in [y, y+\epsilon]]    &= \frac{\lambda x(1 - e^{-\lambda \epsilon})}{(1 + \lambda(x + \epsilon))e^{-\lambda \epsilon} - (1 + \lambda x)} \\
+            \Pr[X_1 = x | Y \in [y, y+\epsilon]]       &= \frac{\lambda}{(1 + \lambda x + \frac{\lambda \epsilon}{1 - e^{\lambda \epsilon}})} \\
+                                                       &\approx \frac{1}{t}, \epsilon \to \infty
+        \end{align*}
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Normal Darts?}
+
+\begin{Parts}
+    
+    \Part What is the distribution of $r_a$? 
+
+    \begin{Answer}
+        \begin{align*}
+            f(X_a) = f(Y_a)   &= \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}} \\
+            \Pr[X_a=x,Y_a=y]  &= \frac{1}{2\pi}e^{-\frac{x^2+y^2}{2}} \\
+            \Pr[r_a \leq R]   &= \frac{1}{2\pi}\int_{x^2+y^2\leq r} e^{-\frac{x^2+y^2}{2}} dx dy \\
+                              &= \frac{1}{2\pi}\int_0^R \int_0^{2\pi} e^{-\frac{r^2}{2}}r dr d\theta \\
+                              &= \Eval{-e^{-\frac{r^2}{2}}}{0}{R} \\
+                              &= 1 - e^{\frac{-R^2}{2}} \\
+            f_{r_a}(r)        &= \begin{cases}
+                re^{\frac{-r^2}{2}} &, r \geq 0 \\
+                0                   &, r < 0
+            \end{cases}
+        \end{align*}
+    \end{Answer}
+
+    \Part What is the distribution of $r_j$? 
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[r_j \leq r] &= \frac{r^2}{9}, r \leq 3 \\
+            f_{r_j}(r)      &= \begin{cases}
+                \frac{2r}{9} &, 0 \leq r \leq 3 \\
+                0            &, r < 0, r > 3
+            \end{cases}
+        \end{align*}
+    \end{Answer}
+
+    \Part What is the probability that Alex wins the game? 
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[A] &= \Pr[r_a=r]\Pr[r_j \geq i] \\
+                   &= \int_0^3 re^{\frac{-r^2}{2}}(1 - \frac{r^2}{9}) dr \\
+                   &= \frac{7}{9} + \frac{2}{9}e^{-\frac{9}{2}}
+        \end{align*}
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Why Is It Gaussian?}
+
+\begin{Answer}
+    \begin{proof}
+        We will heavily use lemma $20.1$ to proceed with the proof. \\
+        Suppose $Z = \frac{X - \mu}{\sigma}$, then $Z$ is normally distributed with $\mu=0, \sigma=1$. 
+        We have $X = \sigma Z + \mu$. Then we further have $Y = aX + b = a\sigma Z + (a\mu + b)$. Thus 
+        we have $Z = \frac{Y - (a\mu + b)}{a\sigma}$. Thus we know that $Y$ is normally distributed 
+        with parameters $a\mu + b, a\sigma$. 
+    \end{proof}
+\end{Answer}
+
+\newpage
+\Question{Moments of the Gaussian}
+
+\begin{Parts}
+    
+    \Part Prove the identity
+
+    \begin{Answer}
+        \begin{align*}
+            A   &= \int_{-\infty}^{\infty} e^{-\frac{tx^2}{2}} dx \\
+            A^2 &= \int_{-\infty}^{\infty} e^{-\frac{tx^2}{2}} dx \int_{-\infty}^{\infty} e^{-\frac{ty^2}{2}} dy \\
+                &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-\frac{t}{2}(x^2+y^2)} dy dx \\
+                &= \int_{0}^{2\pi} \int_{0}^{\infty} e^{-r^2}r dr d\theta \\
+                &= \Eval{\theta}{0}{2\pi} \Eval{-\frac{1}{t}e^{-\frac{1}{2}r^2}}{0}{\infty}
+                &= \frac{2\pi}{t} \\
+            A   &= \frac{\sqrt{2\pi}}{\sqrt{t}} \\
+                &\implies \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-\frac{tx^2}{2}} dx = t^{-\frac{1}{2}}
+        \end{align*}
+    \end{Answer}
+
+    \Part Use part a to compute $E[X^{2k}]$ for $k \in \N$.
+
+    \begin{Answer}
+        \begin{align*}
+            E[x^{2k}] &= \int_{-\infty}^{\infty} X^{2k}f(x) dx \\
+                      &= \frac{1}{2\pi} \int_{-\infty}^{\infty} x^{2k} e^{-\frac{x2}{2}} dx \\
+            \frac{d^kt}{dt^k}(\frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-tx^2} dx) &= \frac{d^kt}{dt^k}(t^{-\frac{1}{2}}) \\
+            E[x^{2k}] &= \frac{1}{\sqrt{2\pi}} (\prod_{t=0}^k 2l + 1)
+        \end{align*}
+    \end{Answer}
+
+    \newpage
+    \Part Compute $E[X^{2k+1}]$ for $k \in \N$. 
+
+    \begin{Answer}
+        \begin{align*}
+            E(x^{2k+1}) &= \frac{1}{2\pi} \int_{-\infty}^{\infty} x^{2k+1} e^{-\frac{x^2}{2}} dx \\
+                        &= \frac{1}{2\pi} \int_{-\infty}^0 x^{2k+1} e^{-\frac{x^2}{2}} dx + \int_0^{\infty} x^{2k+1} e^{-\frac{x^2}{2}} dx \\
+                        &= 0
+        \end{align*}
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Noisy Love}
+
+\begin{Parts}
+    
+    \Part What is the probability that you are correct using this rule? 
+    
+    \begin{Answer}
+        \begin{align*}
+            \Pr[C]  &= \Pr[X = 1 \cap \epsilon > -0.5] + \Pr[x = 0 \cup \epsilon \leq 0.5] \\
+                    &= \Pr[X = 1] \Pr[\epsilon > -0.5] + \Pr[x = 0] \Pr[\epsilon \leq 0.5] \\
+                    &= 0.3 (1 - \Phi(\frac{-0.5}{0.7})) + 0.7 \Phi(\frac{0.5}{0.7}) \\
+                    &= \Phi(\frac{0.5}{0.7}) \\
+                    &= 0.7625
+        \end{align*}
+    \end{Answer}
+
+    \Part What is the probability that your love interest loves you back?
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[Y\in[0.6,0.6+\delta]] = \delta (0.3 \frac{1}{\sqrt{2\pi}} e^{-\frac{0.4^2}{2}} + 0.7 \frac{1}{\sqrt{2\pi}} e^{-\frac{0.6^2}{2}}) \\
+            \Pr[X=1|Y\in[0.6,0.6+\delta]] \approx 0.3214
+        \end{align*}
+    \end{Answer}
+
+    \Part For what values is it more likely than not that your love interest loves you back? 
+
+    \begin{Answer}
+        
+    \end{Answer}
+
+    \Part Under this new rule, what is the probability that you are correct?
+    
+    \begin{Answer}
+        
+    \end{Answer}
+
+\end{Parts}
+
+\end{document}

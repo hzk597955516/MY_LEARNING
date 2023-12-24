@@ -1,0 +1,375 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{01}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+
+\question{Sundry}
+
+Before you start your homework, state briefly how you worked on it. Who else did you work with? 
+List names and email addresses. (In case of homework party, you can just describe the group.)
+
+\begin{Answer}
+	I have discussed the homework problems with the following people. I then wrote down the solutions
+	myself.
+
+	\begin{itemize}
+		\item Jeffery Chen -- jefferyyc@berkeley.edu
+	\end{itemize}
+\end{Answer}
+
+\newpage
+\question{Miscellaneous Logic}
+
+\begin{Parts}
+	
+	\Part Let the statement, $(\forall x \in \R)(\exists y \in \R) G(x, y)$, be true for 
+	predicate $G(x, y)$.
+
+	For each of the following statements, decide if the statement is certainly true, certainly 
+	false, or possibly true, and justify your solution. (If possibly true, provide a specific 
+	example where the statement is false and a specific example where the statement is true.)
+
+	\begin{enumerate}[(i)]
+		\item $G(3,4)$ 
+		
+		\begin{Answer}
+			Possibly true. It is only guaranteed that when $x=3$, there is some 
+			$y$ that will make $G(x,y)$ true. However, $y$ is not guaranteed to equal $4$. An
+			example to make $G(3,4)$ false is let G be $x=y$. An example to make $G(3,4)$ true
+			is let G be $x<y$. 
+		\end{Answer}
+
+		\item $(\forall x \in \R) G(x,3)$x
+		
+		\begin{Answer}
+			Possibly true. It is only guaranteed that for x being any real number, there is 
+			some $y$ that will make $G(x,y)$ true. However, $y$ is not guaranteed to equal $3$. 
+			An example to make the statement true is let G be $y=3$. An example to make the 
+			statement false is let G be $y \neq 3$.
+		\end{Answer}
+
+		\item $\exists y G(3,y)$
+		
+		\begin{Answer}
+			Certainly true. It has been guaranteed for any value of x there exists a $y$ such 
+			that $G(x,y)$ is true. As a result, when $x=3$, there must exist a $y \in \R$ such 
+			that $G(x,y)$ is true.
+		\end{Answer}
+
+		\item $\forall y \neg G(3,y)$
+		
+		\begin{Answer}
+			Certainly false. It has been guaranteed for any value of x there exists a $y$ such
+			that $G(x,y)$ is true. As a result, when $x=3$, there must exist at least one 
+			$y \in \R$ such that $G(x,y)$ is true. As a result, it cannot be true that all 
+			$y \in \R$ will make $G(x,y)$ false. 
+		\end{Answer}
+
+		\item $\exists x G(x,4)$
+		
+		\begin{Answer}
+			Possibly true. It is only guaranteed that for x being any real number, there is 
+			some $y$ that will make $G(x,y)$ true. There might be an x where $y=4$ makes $G(x,y)$
+			true, or there might be such an x. An example to make the statement true is let $G$ be
+			$x=y$, where $x=4$ will satisfy the situation. An example to make the statement false
+			is let $G$ be $y \neq 4$, in which case no $x \in \R$ can make $G(x,4)$ true. 
+		\end{Answer}
+	\end{enumerate}
+	
+	\newpage
+	\Part Give an expression using terms involving $\lor$, $\land$ and ¬ which is true if and only 
+	if exactly one of $X$, $Y$, and $Z$ is true.
+
+	\begin{Answer}
+		$(X \land \neg Y \land \neg Z) \lor (\neg X \land Y \land \neg Z) \lor (\neg X \land \neg Y \land Z)$
+	\end{Answer}
+	
+\end{Parts}
+
+\newpage
+\question{Propositional Practice}
+
+Convert the following English sentences into propositional logic and the following 
+propositions into English. State whether or not each statement is true with brief justification. 
+
+\begin{Parts}
+	
+	\Part There is a real number which is not rational.
+
+	\begin{Answer}
+		$(\exists x \in \R)(x \notin \Q)$ \\ 
+		This is true, an example would be $\sqrt{2}$. 
+	\end{Answer}
+
+	\Part All integers are natural numbers or are negative, but not both.
+
+	\begin{Answer}
+		$(\forall x \in \Z)((\neg (x \in \N) \land (x < 0)) \lor ((x \in \N) \land \neg (x < 0)))$ \\
+		This is true, since if an integer is negative, it is less than $0$, meaning that it is not
+		a natural number. If the integer is not negative, it is either exactly $0$ or it is positive, 
+		meaning that it is a natural number. 
+	\end{Answer}
+
+	\Part If a natural number is divisible by 6, it is divisible by 2 or it is divisible by 3.
+
+	\begin{Answer}
+		$(\forall x \in \N)((6 \mid x) \implies ((2 \mid x) \lor (3 \mid x)))$ \\ 
+		This is true, since if $6 \mid x$, $\exists q \in \Z$ such that $x=6q$. It is obvious that 
+		$x=2(3q)$ or $x=3(2q)$, and $3q,2q \in \Z$. Thus, $2 \mid x$ or $3 \mid x$.
+	\end{Answer}
+	
+	\Part $(\forall x \in \R)(x \in \C)$
+
+	\begin{Answer}
+		All real numbers are complex numbers. \\
+		It is true, since $\R \subset \C$. 
+	\end{Answer}
+
+	\Part $(\forall x \in \Z)(((2|x) \lor (3|x)) \implies (6|x))$
+
+	\begin{Answer}
+		If an integer is divisible by 2 or divisible by 3, it is divisible by 6. \\ 
+		It is false. A counterexample would be $x=2$. 
+	\end{Answer}
+
+	\Part $(\forall x \in \N)((x>7) \implies ((\exists a,b \in \N)(a+b=x)))$
+
+	\begin{Answer}
+		All natural numbers larger than 7 can be represented as the sum of two natural numbers. \\
+		It is obviously true, since it can alway be represented as the sum of $1$ and $n-1$. 
+	\end{Answer}
+	
+\end{Parts}
+
+\newpage
+\question{Prove or Disprove}
+
+\begin{Parts}
+	
+	\Part $(\forall n \in \N)$ if $n$ is odd then $n^2+2n$ is odd.
+
+	\begin{Answer}
+		True. $n$ is odd $\implies (\exists k \in \N)(n = 2k + 1)$. $n^2 + 2n = (2k + 1)^2 + 2(2k + 1)
+		= 2(2k^2 + 4k + 1) + 1$. Let $l = 2k^2 + 4k + 1$. It's obvious that $l \in \N$ and $n^2 + 2n = 
+		2l + 1$. As a result, we conclude that $n^2 + 2n$ is odd. 
+	\end{Answer}
+
+	\Part $(\forall x,y \in \R) min(x,y) = (x + y - |x - y|) / 2$
+
+	\begin{Answer}
+		True. We will prove by cases. Either $x \leq y$ or $x > y$. If $x \leq y$, $min(x,y)=x$, $(x + y
+		 - |x - y|) / 2 = ((x+y)-(y-x))/2 = x$. If $x > y$, $min(x,y)=y$, $(x+y-|x-y|)/2 = ((x+y)-(x-y))/2
+		  = y$. As a result, we conclude that $(\forall x,y \in \R) min(x,y) = (x + y - |x - y|) / 2$. 
+	\end{Answer}
+
+	\Part $(\forall a,b \in \R)$ if $a+b \leq 10$ then $a \leq 7$ or $b \leq 3$.
+
+	\begin{Answer}
+		True. We prove by contraposition. The original proposition can be rewritten as $(\forall a,b \in \R)
+		(a+b \leq 10) \implies ((a \leq 7) \lor (b \leq 3))$. Negating the conclusion gives us $((a > 7) \land
+		(b > 3)) \implies (a + b > 10)$, which directly contradicts the hypothesis. As a result, we conclude 
+		that $(\forall a,b \in \R)$ if $a+b \leq 10$ then $a \leq 7$ or $b \leq 3$.
+	\end{Answer}
+
+	\Part $(\forall r \in \R)$ if $r$ is irrational then $r + 1$ is irrational.
+
+	\begin{Answer}
+		True. We prove by contraposition. The original proposition can be rewritten as $(\forall r \in \R)
+		(r \notin \Q) \implies (r + 1 \notin \Q)$. We assume that $r + 1 \in \Q$, then $(\exists a,b \in \Z)
+		r+1=\frac{a}{b}$. Then $r=\frac{a-b}{b}$, and since $a-b \in \Z$ and $b \in \Z$, $r \in \Q$. This 
+		contradicts the hypothesis. Thus, we can conclude here. 
+	\end{Answer}
+
+	\Part $(\forall n \in \Z_+) 10n^2 > n!$.
+
+	\begin{Answer}
+		False. We give cases that will contradict the proposition. Let $n = 10$, $10n^2 = 10^3 = 1000$, 
+		$10! = 3,628,800$, $10n^2 < n!$, the proposition is not true. 
+	\end{Answer}
+
+\end{Parts}
+
+\newpage
+\question{Preserving Set Operations}
+
+For a function $f$, define the image of a set $X$ to be the set $f(X) = \{y~|~y = f(x) \text{ for some } 
+x \in X\}$. Define the inverse image or preimage of a set $Y$ to be the set $f^{-1}(Y) = \{x~|~f(x) \in Y\}$. 
+Prove the following statements, in which $A$ and $B$ are sets. By doing so, you will show that inverse 
+images preserve set operations, but images typically do not.
+
+\begin{Parts}
+	
+	\Part $f^{-1}(A \cup B) = f^{-1}(A) \cup f^{-1}(B)$.
+
+	\begin{Answer}
+		First, $\forall x \in f^{-1}(A \cup B)$, $f(x) \in (A \cup B) \implies (f(x) \in A) \lor (f(x) \in B) 
+		\implies (x \in f^{-1}(A)) \lor (x \in f^{-1}(B)) \implies x \in (f^{-1}(A) \cup f^{-1}(B)) \implies 
+		f^{-1}(A \cup B) \subseteq (f^{-1}(A) \cup f^{-1}(B))$. Then, $\forall x \in f^{-1}(A) \cup f^{-1}(B)$, 
+		$(x \in f^{-1}(A)) \lor (x \in f^{-1}(B)) \implies (f(x) \in A) \lor (f(x) \in B) \implies f(x) \in 
+		(A \cup B) \implies (f^{-1}(A) \cup f^{-1}(B)) \subseteq f^{-1}(A \cup B)$. We conclude. 
+	\end{Answer}
+	
+	\Part $f^{-1}(A \cap B) = f^{-1}(A) \cap f^{-1}(B)$.
+
+	\begin{Answer}
+		First, $\forall x \in f^{-1}(A \cap B)$, $f(x) \in (A \cap B) \implies (f(x) \in A) \land (f(x) \in B) 
+		\implies (x \in f^{-1}(A)) \land (x \in f^{-1}(B)) \implies x \in f^{-1}(A) \cap f^{-1}(B) \implies 
+		f^{-1}(A \cap B) \subseteq f^{-1}(A) \cap f^{-1}(B)$. Then, $\forall x \in f^{-1}(A) \cap f^{-1}(B)$,
+		$(x \in f^{-1}(A)) \land (x \in f^{-1}(B)) \implies (f(x) \in A) \land (f(x) \in B) \implies f(x) \in 
+		A \cap B \implies x \in f^{-1}(A \cap B) \implies f^{-1}(A) \cap f^{-1}(B) \subseteq f^{-1}(A \cap B)$.
+		We conclude. 
+	\end{Answer}
+
+	\Part $f^{-1}(A \setminus B) = f^{-1}(A) \setminus f^{-1}(B)$.
+	
+	\begin{Answer}
+		First, $\forall x \in f^{-1}(A \setminus B)$, $f(x) \in (A \setminus B) \implies (f(x) \in A) \land 
+		(f(x) \notin B) \implies (x \in f^{-1}(A)) \land (x \notin f^{-1}(B)) \implies x \in f^{-1}(A) \setminus 
+		f^{-1}(B) \implies f^{-1}(A \setminus B) = f^{-1}(A) \setminus f^{-1}(B)$. Then, $\forall x \in f^{-1}(A)
+		\setminus f^{-1}(B)$, $(x \in f^{-1}(A)) \land (x \notin f^{-1}(B)) \implies (f(x) \in A) \land (f(x) 
+		\notin B) \implies f(x) \in (A \setminus B) \implies x \in f^{-1}(A \setminus B) \implies f^{-1}(A) 
+		\setminus f^{-1}(B) \subseteq f^{-1}(A \setminus B)$. We conclude. 
+	\end{Answer}
+	
+	\Part $f(A \cup B) = f(A) \cup f(B)$.
+	
+	\begin{Answer}
+		First, $\forall x \in A \cup B$, $(x \in A) \lor (x \in B)$. $x \in A \implies f(x) \in f(A)$, $x \in B
+		\implies f(x) \in f(B)$, $(x \in A) \lor (x \in B) \implies f(x) \in f(A) \cup f(B) \implies f(A \cup B) 
+		\subseteq f(A) \cup f(B)$. Then, $\forall f(x) \in f(A) \cup f(B)$, $(f(x) \in f(A)) \lor (f(x) \in f(B))
+		\implies (x \in A) \lor (x \in B) \implies x \in (A \cup B) \implies f(x) \in f(A \cup B)$, $f(A) \cup f(B)
+		\subseteq f(A \cup B)$. We conclude. 
+	\end{Answer}
+
+	\Part $f(A \cap B) \subseteq f(A) \cap f(B)$, and give an example where equality does not hold.
+	
+	\begin{Answer}
+		$\forall x \in A \cap B$, $f(x) \in f(A \cap B) \implies (f(x) \in A) \land (f(x) \in B) \implies (x \in A)
+		\land (x \in B) \implies f(x) \in f(A) \cap f(B)$. An example where equality does not hold is $A = \{2, 0, -1\}$, 
+		$B = \{-2, 0, 1\}$, then $A \cap B = \{0\}$. Let $f(x) = x^2$, $f(A \cap B) = \{0\}$, $f(A) = \{0, 1, 4\}$, 
+		$f(B) = \{0, 1, 4\}$, $f(A) \cap f(B) = \{0, 1, 4\}$. The equality does not hold.  
+	\end{Answer}
+
+	\Part $f(A \setminus B) \supseteq f(A) \setminus f(B)$, and give an example where equality does not hold.
+	
+	\begin{Answer}
+		$\forall x \in A \setminus B$, $f(x) \in f(A \setminus B) \implies (f(x) \in f(A)) \land (f(x) \notin f(B))
+		\implies (x \in A) \land (x \notin B) \implies f(x) \in f(A) \setminus f(B)$. An example where equality does 
+		not hold is $A = \{1, -1, 0\}$, $B = \{1\}$, $f(x) = x^2$. Then $f(A \setminus B) = \{0, 1\}$, $f(A) = \{0, 1\}$,
+		$f(B) = \{1\}$, $f(A) \setminus f(B) = \{0\}$. The equality does not hold. 
+	\end{Answer}
+	
+\end{Parts}
+
+\newpage
+\question{Hit or Miss?}
+
+State which of the proofs below is correct or incorrect. For the incorrect ones, please explain clearly where the 
+logical error in the proof lies. Simply saying that the claim or the induction hypothesis is false is \emph{not} 
+a valid explanation of what is wrong with the proof. You do not need to elaborate if you think the proof is correct.
+
+\begin{Parts}
+	\Part
+		\textbf{Claim:} For all positive numbers $n \in \mathbb{R}$, $n^2 \ge n$.
+		\begin{proof}
+			The proof will be by induction on $n$.	\\
+			\emph{Base Case:} $1^2 \ge 1$. It is true for $n=1$.	\\
+			\emph{Inductive Hypothesis:} Assume that $n^2 \ge n$. 	\\
+			\emph{Inductive Step:} We must prove that $(n+1)^2 \ge n+1$.
+			Starting from the left hand side,
+			\begin{align*}
+				(n+1)^2 &= n^2+2n+1 \\
+						&\ge n+1.
+			\end{align*}
+			Therefore, the statement is true.
+		\end{proof}
+		
+	\begin{Answer}
+		The proof is incorrect. The proof only proves that the statement is true for all positive integers. However, the domain 
+		of n here is all real numbers, and the proof above fails to address any decimal number. A counterexample to the claim would 
+		be $n=0.1$, $0.1^2=0.01<0.1$, the claim does not hold. 
+	\end{Answer}
+
+	\Part
+		\textbf{Claim:} For all negative integers $n$, $(-1) + (-3) + \cdots + (2n+1) = -n^2$.
+		\begin{proof}
+			The proof will be by induction on $n$.	\\
+			\emph{Base Case:} $-1 = -(-1)^2$. It is true for $n=-1$. \\
+			\emph{Inductive Hypothesis:} Assume that $(-1) + (-3) + \cdots + (2n+1) = -n^2$. \\
+			\emph{Inductive Step:} We need to prove that the statement is also true for $n-1$ if it is true for $n$, that is,
+			 $(-1) + (-3) + \cdots + (2(n-1)+1) = -(n-1)^2$. Starting from the left hand side,
+			\begin{align*}
+				(-1) + (-3) + \cdots + (2(n-1)+1)
+				&= ((-1) + (-3) + \cdots + (2n+1))+(2(n-1)+1)	\\
+				&= -n^2 + (2(n-1)+1)				\quad \text{(Inductive Hypothesis)}\\
+				&= -n^2 + 2n - 1					\\
+				&= -(n^2 - 2n + 1) \\
+				&= -(n-1)^2.
+			\end{align*}
+			Therefore, the statement is true.
+		\end{proof}
+
+	\begin{Answer}
+		% The proof is incorrect. The inductive hypothesis should assume that for an arbitrary $n=k$, $(-1)+(-3)+\ldots+(2k+1)
+		% =-k^2$. Then in the inductive step, it should use this arbitrary $k$ to do all relevant work. 
+		The proof is correct. 
+	\end{Answer}
+
+	\Part
+		\textbf{Claim:} For all nonnegative integers $n$, $2n=0$.
+		\begin{proof}
+			We will prove by strong induction on $n$.	\\
+			\emph{Base Case:} $2 \times 0 = 0$. It is true for $n=0$.	\\
+			\emph{Inductive Hypothesis:} Assume that $2k=0$ for all $0 \le k \le n$.	\\
+			\emph{Inductive Step:} We must show that $2(n+1)=0$. Write $n+1 = a+b$ where $0 < a,b \le n$.
+			From the inductive hypothesis, we know $2a = 0$ and $2b=0$, therefore,
+			\begin{align*}
+				2(n+1) = 2(a+b) = 2a + 2b = 0+0 =0.
+			\end{align*}
+			The statement is true.
+		\end{proof}
+
+	\begin{Answer}
+		The proof is incorrect. In the first inductive step, when $n=0$, $0<a,b\leq 0$, $n+1$ cannot be rewritten as 
+		the sum of $a$ and $b$. Thus the inductive step does not hold, and the statement is proven to be false. 
+	\end{Answer}
+\end{Parts}
+
+\newpage
+\question{Badminton Ranking}
+
+A team of $n$ ($n \geq 2$) badminton players held a tournament, where every person plays with every other person exactly 
+once, and there are no ties. Prove by induction that after the tournament, we can arrange the $n$ players in a sequence, 
+so that every player in the sequence has won against the person immediately to the right of him.
+
+\begin{Answer}
+	\begin{proof}
+		The proof will be by induction on $n$.	\\
+		\emph{Base Case:} There must be a winner and a loser in 2 players. The claim is true for $n=2$. \\
+		\emph{Inductive Hypothesis:} Assume that for $k$ players, there is a sequence in which every player has won against 
+		the person immediately to the right of him. \\ 
+		\emph{Inductive Step:} We need to prove that the statement is also true for $k+1$ if it is true for $k$. We take out
+		the correct sequence for the rest $k$ players and consider player $k+1$. If he wins all the contests, we put him to 
+		the front of the sequence. If he loses all his contests, we put him to the right most end of the sequence. If neither
+		of the cases apply, we just search the entire sequence and insert the player between two other players, one of whom 
+		he wins and the other he loses. We start from the left end and move on one player per step. There must exist a case 
+		where the new player is won by the player to his left and wins the player to his right. Otherwise it indicates that 
+		the player defeats or loses all the contests, which have been discussed above. \\
+		Therefore, the statement is true.
+	\end{proof}
+\end{Answer}
+
+\end{document}

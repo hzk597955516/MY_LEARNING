@@ -1,0 +1,373 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{07}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\renewcommand*{\bmod}{\mathbin{\%}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+\section*{Sundry}
+
+\begin{Answer}
+    I typeset the homework using \LaTeX and discussed the problems with the following people.
+    \begin{itemize}
+        \item Yijia Chen -- yijia.chen@berkeley.edu
+    \end{itemize}
+\end{Answer}
+
+\newpage
+\Question{Rubik's Cube Scrambles}
+
+\begin{Parts}
+    \Part The $2\times2\times2$ Rubik's Cube is composed of 8 "corner pieces" arranged in a 
+    $2\times2\times2$ cube. How many ways can we assign all the corner pieces a position?
+    \begin{Answer}
+        $8 \times 7 \times 6 \times \ldots \times 1 = 8!$
+    \end{Answer}
+
+    \Part Each corner piece has three distinct colors on it, and so can also be oriented three 
+    different ways once it is assigned a position (see figure below). How many ways can we 
+    \emph{assemble} (assign each piece a position and orientation) a $2\times2\times2$ Rubik's Cube?
+    \begin{Answer}
+        $(8 \times 3)(7 \times 3)(6 \times 3)\ldots(1 \times 3) = 8! \times 3^8$
+    \end{Answer}
+
+    \Part The previous part assumed we can take apart pieces and assemble them as we wish. 
+    But certain configurations are unreachable if we restrict ourselves to just turning the 
+    sides of the cube. What this means for us is that if the orientations of 7 out of 8 of the corner 
+    pieces are determined, there is only 1 valid orientation for the eighth piece. Given this, how 
+    many ways are there to \emph{scramble} (as opposed to \emph{assemble}) a $2\times2\times2$ Rubik's Cube?
+    \begin{Answer}
+        $(8 \times 3)(7 \times 3)(6 \times 3)\ldots 1 = 8! \times 3^7$
+    \end{Answer}
+
+    \Part We decide to treat scrambles that differ only in overall positioning (e.g. flipped 
+    upside-down or rotated but otherwise unaltered) as the same scramble. Then we overcounted 
+    in the previous part! How does this new condition change your answer to the previous part?
+    \begin{Answer}
+        $8! \times 3^7 / 12$
+    \end{Answer}
+
+    \Part Now consider the $3\times3\times3$ Rubik's Cube. In addition to 8 corner pieces, we 
+    now have 12 "edge" pieces, each of which can take 2 orientations. How many ways can we 
+    \emph{assemble} a $3\times3\times3$ Rubik's Cube?
+    \begin{Answer}
+        TODO: Finish this problem
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Counting, Counting, and More Counting}
+
+\begin{Parts}
+
+    \Part How many ways are there to arrange $n$ 1s and $k$ 0s into a sequence?
+    \begin{Answer}
+        ${n + k \choose n}$
+    \end{Answer}
+
+    \Part A bridge hand is obtained by selecting 13 cards from a standard
+    52-card deck. The order of the cards in a bridge hand is
+    irrelevant. 
+    \begin{enumerate}[(i)]
+        \item How many different 13-card bridge hands are there? 
+        \begin{Answer}
+            ${52 \choose 13}$
+        \end{Answer}
+
+        \item How many different 13-card bridge hands are there that contain no aces? 
+        \begin{Answer}
+            ${48 \choose 13}$
+        \end{Answer}
+
+        \item How many different 13-card bridge hands are there that contain all four aces? 
+        \begin{Answer}
+            ${48 \choose 9}$
+        \end{Answer}
+
+        \item How many different 13-card bridge hands are there that contain exactly 6 spades?
+        \begin{Answer}
+            ${13 \choose 6} \times {39 \choose 7}$
+        \end{Answer}
+    \end{enumerate}
+
+    \Part Two identical decks of 52 cards are mixed together, yielding a stack of 104 cards. 
+    How many different ways are there to order this stack of 104 cards?
+    \begin{Answer}
+        ${\frac{104!}{2^{52}}}$
+    \end{Answer}
+    
+    \Part How many 99-bit strings are there that contain more ones than zeros?
+    \begin{Answer}
+        $2^{98}$
+    \end{Answer}
+    
+    \Part An anagram of FLORIDA is any re-ordering of the letters of FLORIDA, i.e., any string made up 
+    of the letters F, L, O, R, I, D, and A, in any order. The anagram does not have to be an English word. 
+    \begin{enumerate}[(i)]
+        
+        \item How many different anagrams of FLORIDA are there?
+        \begin{Answer}
+            $7!$
+        \end{Answer}
+        
+        \item How many different anagrams of ALASKA are there?
+        \begin{Answer}
+            $\frac{6!}{3!}$
+        \end{Answer}
+
+        \item How many different anagrams of ALABAMA are there? 
+        \begin{Answer}
+            $\frac{7!}{4!}$
+        \end{Answer}
+
+        \item How many different anagrams of MONTANA are there?
+        \begin{Answer}
+            $\frac{7!}{2!2!}$
+        \end{Answer}
+
+    \end{enumerate}   
+    
+    \Part How many different anagrams of ABCDEF are there if: 
+    \begin{enumerate}[(i)]
+        
+        \item C is the left neighbor of E; 
+        \begin{Answer}
+            $5!$
+        \end{Answer}
+
+        \item C is on the left of E (and not necessarily E's neighbor
+        \begin{Answer}
+            $\frac{6!}{2}$
+        \end{Answer}
+
+    \end{enumerate}
+
+    \Part We have 9 balls, numbered 1 through 9, and 27 bins. How many different ways are there to distribute these 9 balls among
+    the 27 bins? Assume the bins are distinguishable (e.g., numbered 1 through 27).
+    \begin{Answer}
+        $27^9$
+    \end{Answer}
+    
+    \newpage
+    \Part We throw 9 identical balls into 7 bins. How many different ways are there to distribute these 9 balls among
+    the 7 bins such that no bin is empty? Assume the bins are distinguishable (e.g., numbered 1 through 7).
+    \begin{Answer}
+        ${8 \choose 2}$
+    \end{Answer}
+    
+    \Part How many different ways are there to throw 9 identical balls into 27 bins? Assume the bins are distinguishable (e.g., numbered 1
+    through 27).
+    \begin{Answer}
+        ${35 \choose 9}$
+    \end{Answer}
+    
+    \Part There are exactly 20 students currently enrolled in a class. How many different ways are there to pair up the 20 students, so
+    that each student is paired with one other student?
+    \begin{Answer}
+        ${\frac{19!}{9!2^9}}$
+    \end{Answer}
+    
+    \Part How many solutions does $x_0 + x_1 + \cdots + x_k = n$ have, if each $x$ must be a non-negative integer?
+    \begin{Answer}
+        ${n+k \choose k}$
+    \end{Answer}
+
+    \Part How many solutions does $x_0 + x_1 = n$ have, if each $x$ must be a \emph{strictly positive} integer?
+    \begin{Answer}
+        $n-1$
+    \end{Answer}
+    
+    \Part How many solutions does $x_0 + x_1 + \cdots + x_k = n$ have, if each $x$ must be a \emph{strictly positive} integer?
+    \begin{Answer}
+        $n - 1 \choose k$
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Divisor Graph Colorings}
+
+Define $G$ where we have $V=\{2, 3, 4, 5, 6, 7, 8, 9\}$, and we add an 
+edge between vertex $i$ and vertex $j$ if $i$ divides $j$, or $j$ divides $i$.
+
+\begin{Parts}
+    
+    \Part Explain why we cannot vertex-color G with only 2 colors.
+
+    \begin{Answer}
+        Consider vertices $2,4,8$. Since $2 \mid 4, 4 \mid 8, 2 \mid 8$, there 
+        is a cycle among $2$, $4$, and $8$, which requires at least three colors. 
+        Thus we need to vertex-color $G$ in at least three colors. 
+    \end{Answer}
+
+    \Part How many ways can we vertex-color G with 3 colors?
+
+    \begin{Answer}
+        We start coloring from vertex $2$. Assume there are colors $A,B,C$. 
+        Suppose vertex $2$ is colored $A$, then there are two ways to color vertices
+        $4,8$. For each coloring of the $2,4,8$ cycle, since none of them has any 
+        connection to other nodes except $2$, node $6$ can choose $2$ colors, 
+        node $3$ can choose two colors, and finally node $9$ can choose $2$ colors. 
+        The total number of colorings for nodes $2,4,8,3,6,9$ is $6 \times 2^3 = 48$. 
+        Since vertices $5,7$ are disconnected, they can be colored freely. Thus 
+        the total number of coloring of the whole graph is $48 \times 3^2 = 432$. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Vacation Time}
+After a number of complaints, the Dunder Mifflin Paper Company has decided on the following rule for vacation leave for the next year (365 days): Every employee must take exactly one vacation leave of 4 consecutive days, one vacation leave of 5 consecutive days and one vacation leave of 6 consecutive days within the year, with the property that any two of the vacation leaves have a gap of at least 7 days between them. In how many ways can an employee arrange their vacation time? (The vacation policy resets every year, 
+so there is no need to worry about leaving a gap between this year and next year's vacations).
+
+\begin{Answer}
+    The total number of vacation periods in the year is $3$. The total number of days an employee is not on 
+    vacation is $365 - 4 - 5 - 6 = 350$. Besides every two vacation has to be apart from each other for 
+    at least $7$ days. Thus for any ordering, we can imagine the first taking up $v_1 + 7$ days, the second 
+    one taking up $v_2 + 7$ days, and the third one taking up $v_3$ days where $\{v_1, v_2, v_3\}$ is an 
+    ordering of $\{4,5,6\}$. Thus the total number of days an employee not on vacation is $350 - 14 = 336$. 
+    Imagine there are $339$ slots where three of them are vacations and $336$ of them are normal days. 
+    The three vacations are distinguishable and the days are not. Thus we have the total number of ways of
+    arranging the vacations as $339 \times 338 \times 337 = 38,614,134$. 
+\end{Answer}
+
+\newpage
+\Question{Story Problems}
+
+\newcommand{\sblank}{\vspace{1in}}
+Prove the following identities by combinatorial argument:
+\begin{Parts}
+
+    \Part $\binom{2n}{2} = 2 \binom{n}{2} + n^2$
+    
+    \begin{Answer}
+        \begin{proof}
+            How many ways are there to choose $2$ elements from a size $2n$ set? \\
+            Consider splitting the set with size $2n$ with two arbitrary sets with sizes $n$. 
+            We denote the two sets as $A,B$. We have the below cases for the $2$ elements we choose. 
+            \begin{itemize}
+                \item They are both in $A$. There are thus ${n \choose 2}$ ways. 
+                \item They are both in $B$. There are thus ${n \choose 2}$ ways. 
+                \item One of them is in $A$ and the other is in $B$. There are $n \times n = n^2$ ways. 
+            \end{itemize}
+            Thus the total number of ways to choose $2$ items from a size $2n$ set is $2{n \choose 2} + n^2$. 
+        \end{proof}
+    \end{Answer}
+
+  	\Part $n^2 = 2 \binom{n}{2} + n$
+
+    \begin{Answer}
+        \begin{proof}
+            How many ways are there to choose 2 elements from a size $A$ set with replacement? \\
+            Since there's replacement, both the first and the second has $n$ choices, so the answer
+            is $n^2$. There are only two cases for the two elements. They are the same or they are different. 
+            \begin{itemize}
+                \item The two elements are the same. There are totally $n$ choices. 
+                \item The two elements are different. It's the same as choosing $2$ without replacement except 
+                that the order matters. So the total number of choices is $n(n - 1) = 2{n \choose 2}$. 
+            \end{itemize}
+            Thus the total number of choices for the two elements is $n + 2{n \choose 2} = n^2$. 
+        \end{proof}
+    \end{Answer}
+
+    \Part $\sum_{k=0}^n k {n \choose k} = n2^{n-1}$
+
+    \begin{Answer}
+        \begin{proof}
+            How many ways are there to pick a subset of people from $n$ people and then choose a leader? 
+            The subset of people can have sizes $0$ to $n$. For each possible size $k$ we have ${n \choose k}$ 
+            ways to form the subset. To choose a leader from each subset, we can have $k$ ways. Thus the 
+            total number of possibilities for this problem is $\sum_{k=0}^n k{n \choose k}$. \\
+            Consider the problem from another perspective. Each person can be a leader, so there are $n$ 
+            possible leaders. For each leader determined, there are $n-1$ people left to choose. Any person 
+            can be chosen in the subset or not. So the total number of possible subsets for each leader 
+            is $2^{n-1}$. With $n$ possible leaders, there are $n2^{n-1}$ possibilities to this problem. 
+        \end{proof}
+    \end{Answer}
+
+    \Part $\sum_{k=j}^n {n \choose k} {k \choose j} = 2^{n-j} {n \choose j}$ 
+    
+    \begin{Answer}
+        How many ways are there to choose $k$ people from $n$ people and then choose $j$ people from the 
+        $k$ people? \\
+        The first way to consider this problem is to consider the group of $k$ people first. In order to 
+        choose $j$ people from it, $n \geq k \geq j$. For each possible size $k$, we have ${n \choose k}$
+        ways to form the group. Then for each group there are ${k \choose j}$ ways to finalize the $j$ 
+        people. Thus the answer to the problem is $\sum_{k=j}^n{n \choose k}{k \choose j}$. \\
+        Another way to consider this problem is to consider the $j$ people chosen. There are in total 
+        ${n \choose j}$ ways to choose the $j$ people directly. For each possible $j$ people group, there 
+        are $n - j$ people left. Each person among these $n - j$ people can either belong to the 
+        $k$-people group or not. Thus there are $2^{n-j}$ ways to form the $k$-people group the 
+        that the $j$-people group belongs to for each $j$-people group. Thus the answer to this 
+        problem can also be written as $2^{n-j}{n \choose j}$. \\
+        Thus we conclude that $\sum_{k=j}^n {n \choose k} {k \choose j} = 2^{n-j} {n \choose j}$. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Fermat's Wristband}
+
+Let $p$ be a prime number and let $k$ be a positive integer.
+We have beads of
+$k$ different colors, where any two beads of the same color are indistinguishable.
+
+\begin{Parts}
+
+    \Part
+    We place $p$ beads onto a string.
+    How many different ways are there construct such a sequence of $p$ beads with up to $k$ different colors?
+    \begin{Answer}
+        Each bead among the $p$ beads have $k$ choices of colors. Thus the total number of ways 
+        to construct a sequence of $p$ beads is $k^p$.
+    \end{Answer}
+
+    \Part 
+    How many sequences of $p$ beads on the string are there that use at least two colors?
+    \begin{Answer}
+        The total number to use one color to construct the sequence is $k$. So the answer is $k^p - k$. 
+    \end{Answer}
+
+    \Part
+    Now we tie the two ends of the string together, forming a wristband. Two wristbands are 
+    equivalent if the sequence of colors on one can be obtained by rotating the beads on the other.
+    (For instance, if we have $k=3$ colors, red (R), green (G), and blue (B), then the length $p = 5$
+    necklaces RGGBG, GGBGR, GBGRG, BGRGG, and GRGGB are all equivalent, because these are all rotated 
+    versions of each other.) How many non-equivalent wristbands are there now? Again, the $p$
+    beads must not all have the same color.
+    \begin{Answer}
+        Under the new condition, consider rotating one necklaces $p - 1$ times. Combined with the 
+        original neckless, the $p$ neckless are considered different in our original calculation 
+        but are considered as $1$ unique neckless in this problem. So the answer is $\frac{k^p - k}{p}$. 
+    \end{Answer}
+
+    \Part Use your answer to part (c) to prove Fermat's little theorem.
+
+    \begin{Answer}
+        \begin{proof}
+            The answer to the last problem must be an integer, so $p \mid k^p - k$. We also have 
+            $k^p - k = k(k^{p - 1} - 1)$. 
+            \begin{align*}
+                p \mid k^p - k \implies k^p \equiv k \Mod{p}
+            \end{align*}
+            Thereby Fermat's Little Theorem is proved. 
+        \end{proof}
+    \end{Answer}
+
+\end{Parts}
+
+\end{document}

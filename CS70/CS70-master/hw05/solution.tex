@@ -1,0 +1,221 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{05}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\renewcommand*{\bmod}{\mathbin{\%}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+\section*{Sundry}
+
+\begin{Answer}
+    I typeset the homework using \LaTeX and discussed the problems with the following people. 
+    \begin{itemize}
+        \item Yijia Chen -- yijia.chen@berkeley.edu
+    \end{itemize}
+\end{Answer}
+
+\newpage
+\Question{Squared RSA}
+
+\begin{Parts}
+    \Part Prove the identity $a^{p(p - 1)} \equiv 1 \pmod{p^2}$, where $a$ is coprime to $p$, and $p$ is prime.
+    \begin{Answer}
+        \begin{proof}
+            We construct two sets $$S = \{1\cdot a,2 \cdot a,3\cdot a,\ldots,(p^2-1)\cdot a\} - \{p\cdot a,2p\cdot a,3p\cdot a,\ldots,(p-1)p\cdot a\}$$
+            $$S' = \{1, 2, 3, \ldots, p^2 - 1\} - \{p, 2p, 3p, \ldots, (p-1)p\}$$ $\forall i \in S, \gcd(i, p^2)=1$. In addition, all elements in $S$ 
+            have a different $\Mod{p^2}$ value. Suppose $ma > na \in S, ma = na \Mod{p^2}$, then $(m-n)a = 0 \Mod{p^2}$. According to our construction
+            of $S$, $0 < m-n < p^2$. Thus $a \mid p^2$ must be true, which is a contradiction to the fact that $\gcd(a, p^2) = 1$. In addition, 
+            $\forall i \in S$, $p \nmid i \implies p \nmid i \Mod{p^2}$. As a result, we can see that $S$ contains $S' \Mod{p^2}$. Let $f(S)$ be the 
+            product of all elements in $S$, $f(S')$ be the product of all elements in $S'$, it must be true that $f(S) \equiv f(S') \Mod{p^2}$. 
+            After canceling all the multipliers of $a$, we have $a^{p(p-1)} \equiv 1 \Mod{p^2}$. 
+        \end{proof}
+
+    \end{Answer}
+
+    \Part Now consider the RSA scheme: the public key is $(N = p^2 q^2, e)$ for primes $p$ and $q$, 
+          with $e$ relatively prime to $p(p-1)q(q-1)$. The private key is $d = e^{-1} \pmod{p(p-1)q(q-1)}$. 
+          Prove that the scheme is correct for $x$ relatively prime to both $p$ and $q$, i.e.\ $x^{ed} \equiv x \pmod{N}$.
+    \begin{Answer}
+        \begin{proof}
+            \begin{align*}
+                d = e^{-1} \Mod{p(p-1)q(q-1)} &\implies de \equiv 1 \Mod{p(p-1)q(q-1)} \\
+                                              &\implies \exists k \in \N, de = kp(p-1)q(q-1) + 1 \\
+                                              &\implies x^{de} \equiv x^{kp(p-1)q(q-1) + 1} \Mod{N} \\ 
+                                              &\implies x^{de} \equiv ((x^{p(p-1)})^{q(q-1)})^k \Mod{N}
+            \end{align*}
+            From part $(a)$ we know that $x^{p(p-1)} \equiv 1 \Mod{p^2}$. Thus $(x^{p(p-1)})^{q(q-1)} \equiv 1^{q(q-1)} \equiv 1 \Mod{p^2}$. 
+            In addition, viewing $x^{p(p-1)}$ as a whole, $(x^{p(p-1)})^{q(q-1)} \equiv 1 \Mod{q^2}$. It is trivial to see that $\gcd(p^2, q^2) = 1$, 
+            and as a result $(x^{p(p-1)})^{q(q-1)} \equiv 1 \Mod{p^2q^2}$. Thus $x^{de} \equiv 1^k \equiv 1 \Mod{N}$. 
+        \end{proof}
+    \end{Answer}
+
+    \newpage
+    \Part Prove that this scheme is at least as hard to break as normal RSA; that is, prove that if this scheme can be broken, 
+          normal RSA can be as well. We consider RSA to be broken if knowing $pq$ allows you to deduce $(p - 1)(q - 1)$.
+          We consider squared RSA to be broken if knowing $p^2q^2$ allows you to deduce $p(p - 1)q(q - 1)$.
+    \begin{Answer}
+        \begin{proof}
+            We begin by assuming that $p^2q^2$ allows us to deduce $p(p-1)q(q-1)$. \\
+            In the normal RSA scheme, if we know $pq$ in the first place, we can easily know $p^2q^2$ by computing $(pq)^2$. Then according to 
+            the assumption, we can apply the algorithm to break squared RSA so that we know $p(p-1)q(q-1)$. Divide that by $pq$, we have $N$. 
+            In addition to breaking the squared RSA problem, we just squared $pq$ and divided $p(p-1)q(q-1)$ by $pq$, which are easy tasks for
+            computers. \\
+            Thus we have shown that squared RSA is broken, normal RSA can be as well. Thus, this scheme is at least as hard to break as normal RSA. 
+        \end{proof}
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\Question{Breaking RSA}
+Eve is not convinced she needs to factor $N = pq$ in order to break RSA. She argues: "All I need to know is $(p-1)(q-1)$... then I can find $d$
+as the inverse of $e$ mod $(p-1)(q-1)$. This should be easier than factoring $N$." Prove Eve wrong, by showing that if she knows $(p-1)(q-1)$,
+she can easily factor $N$ (thus showing finding $(p-1)(q-1)$ is at least as hard as factoring $N$). Assume Eve has a friend Wolfram, who can easily return the
+roots of polynomials over $\R$ (this is, in fact, easy).
+
+\begin{Answer}
+    \begin{proof}
+        We start by assuming that Eve already knows the value of $(p-1)(q-1)$. \\ 
+        Because $(N,e)$ is the public key for RSA, Eve also knows the value of $pq$. Thus Eve knows the value of $p+q$ because 
+        $p+q = pq + 1 - (p-1)(q-1)$. Let $M=p+q$. We construct the following polynomial. 
+        $$P(x) = (x - p)(x - q) = x^2 - (p + q)x + pq = x^2 - Mx + N$$
+        Since we know all the parameters of $P(x)$, the next thing Eve should do is hand the polynomial to Wolfram and let Wolfram
+        calculate all $x$ where $P(x) = 0$. This gives us $p$ and $q$. \\ 
+        Thus we have proved that if Eve knows $(p-1)(q-1)$, she can easily know $p$ and $q$, thus showing that finding $(p-1)(q-1)$ is at least
+        as hard as factoring $N$. 
+    \end{proof}
+\end{Answer}
+
+\newpage
+\Question{Polynomial Practice}
+
+\begin{Parts}
+    \Part If $f$ and $g$ are non-zero real polynomials, how many roots do the following 
+    polynomials have \textbf{at least}? How many can they have \textbf{at most}? 
+    \begin{enumerate}[(i)]
+        \item $f + g$
+        \begin{Answer}
+            Let the degree of $f$ be $d_1$ and the degree of $g$ be $d_2$. 
+            \begin{itemize}
+                \item At most: $\max(d_1, d_2)$
+                \item At least: $\max(d_1, d_2) \Mod{2}$.
+            \end{itemize}
+        \end{Answer}
+
+        \item $f\cdot g$
+        \begin{Answer}
+            Let the degree of $f$ be $d_1$ and the degree of $g$ be $d_2$. 
+            \begin{itemize}
+                \item At most: $d_1 + d_2$
+                \item At least: $d_1 + d_2 \Mod{2}$.
+            \end{itemize}
+        \end{Answer}
+
+        \item $f/g$, assuming that $f/g$ is a polynomial
+        \begin{Answer}
+            Let the degree of $f$ be $d_1$ and the degree of $g$ be $d_2$. 
+            \begin{itemize}
+                \item At most: $d_1 - d_2$
+                \item At least: $d_1 - d_2 \Mod{2}$.
+            \end{itemize}
+        \end{Answer}
+    \end{enumerate}
+
+	\Part Now let $f$ and $g$ be polynomials over $\mathrm{GF}(p)$.
+    \begin{enumerate}[(i)]
+        \item We say a polynomial $f = 0$ if $\forall x, f(x) = 0$.
+              If $f\cdot g = 0$, is it true that either $f=0$ or $g=0$?
+        \begin{Answer}
+            \textbf{Claim:} $f,g \in \mathrm{GF}(p), f \cdot g = 0 \implies f = 0 \lor g = 0$. 
+            \begin{proof}
+                The proof will be based on contraposition. \\
+                Assume that neither $f = 0$ nor $g = 0$. Then $\exists x,y \in \{0,\ldots,p-1\}$, $f(x) \neq 0$, $g(y) \neq 0$.
+                \begin{itemize}
+                    \item $x=y$, then $f \cdot g(x) = f(x) \cdot g(x) \neq 0$. We have reached a contradiction. 
+                    \item $x \neq y$, then $f \cdot g(xy) = f(xy)g(xy) \neq 0$. This is because $f(xy)$ can be written as the 
+                    sum of the multiplication of a power of $y$ and all nonzero terms in $f(x)$. The same is true for $g$. Even if
+                    one of $x$ and $y$ is zero, we can still add a multiply of $p$ to get a nonzero $x$ and $y$. We have reached a contradiction.  
+                \end{itemize}
+                Thus we conclude that $f,g \in \mathrm{GF}(p), f \cdot g = 0 \implies f = 0 \lor g = 0$.
+            \end{proof}
+        \end{Answer}
+
+        \item If $\deg{f} \geq p$, show that there exists a polynomial $h$ with 
+              $\deg{h} < p$ such that $f(x) = h(x)$ for all $x \in \{0,1,...,p-1\}$.
+        \begin{Answer}
+            \textbf{Claim:} $\forall x \in \{0,1,\ldots,p-1\}, \deg(f) \geq p, \exists h, \deg(h) < p, f(x) = h(x)$
+            \begin{proof}
+                Since $\deg{f} \geq p$, assume that $\deg{f} = n$. We construct $f$ as follows. 
+                $$f(x) = a_0x^0 + a_1x^1 + x_2x^2 + \ldots + a_nx^n$$
+                Since $p$ is prime, according Fermat's Little Theorem, $x^{p-1} = 1 \Mod{p}$. Thus for all the terms $a_ix^i$ where $i >= p$, 
+                we can always find some integer $k, l$ such that $i = k(p - 1) + l$. Then we can rewrite the term $a_ix^i$ as 
+                $a_ix^{k(p - 1) + l} = a_i(x^{p-1})^kx^l = a_ix^l \Mod{p}$. Since $l = x \Mod{p - 1}$, we know for sure that $l < p$. Thus we can
+                just add $a_i$ to $a_l$, which does not change the polynomial. After processing all terms of $a_ix^i$ where $i \geq p$, we have 
+                the new polynomial $P'$ with the maximum degree equal to $p - 1$. Thus we have proved the claim. 
+            \end{proof}
+        \end{Answer}
+        
+        \item How many $f$ of degree \textit{exactly} $d<p$ are there such that 
+            $f(0) = a$ for some fixed $a\in\{0,1,\dots,p-1\}$?
+        \begin{Answer}
+            \textbf{Claim:} There are $(p - 1)p^{d-1}$ $f$ of degree exactly $d < p$ for $f(0) = a$. 
+            \begin{proof}
+                Consider the polynomial $f(x) = a_dx^d + \ldots + a_2x^2 + a_1x + a_0$. For each term $a_ix^i$ where $i \geq 1$ we can choose $a_i$ 
+                to be any value from $\{0,1,2,\ldots,p\}$ except for $a_d$. To make the polynomial to have exactly degree $d$, $a_d \neq 0$. Thus 
+                according to the multiplication principle, we have the total number of polynomials being $(p-1)p^{d-1}$. 
+            \end{proof}
+        \end{Answer}
+    \end{enumerate}
+
+    \Part Find a polynomial $f$ over $\mathrm{GF}(5)$ that satisfies 
+    $f(0) = 1, f(2) = 2, f(4) = 0$. How many such polynomials are there?
+    \begin{Answer}
+        We construct the following delta polynomials.
+        \begin{align*}
+            \Delta_1 &= 2(x - 2)(x - 4) \Mod{5} \\
+            \Delta_2 &= x(x - 4) \Mod{5} \\
+            \Delta_3 &= 0 \Mod{5}
+        \end{align*} 
+        Then we can have an $f = \Delta_1 + 2\Delta_2 + 0\Delta_3 = 4x^2 - 20x + 16 = 4x^2 + 1 \Mod{5}$. \\
+        We can have 25 such polynomials. We can choose $f(1),f(3)$ from $\{0,1,2,3,4\}$, and each combination gives us a unique polynomial. Thus
+        the total number of possible polynomials is 25. 
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\Question{Old secrets, new secrets}
+
+\begin{Answer}
+    We construct the polynomial $p$ from the $n+1$ points we know. 
+    \begin{align*}
+        p(x) &= p(1)\Delta_1(x) + p(2)\Delta_2(x) + p(3)\Delta_3(x) + \ldots + p(n + 1)\Delta_{n + 1}(x) \\
+        p(x) &= a_0 + a_1x + a_2x^2 + a_3x^3 + \ldots + a_nx^n \\
+        p(0) &= a_0 = s \\
+        p(1) &= a_0 + a_1 + a_2 + a_3 + \ldots + a_n
+    \end{align*}
+    Support $p'(x)$ is the new polynomial that corresponds to $s'$. $p'(x)$ still passes the $n$ original points.
+    \begin{align*}
+        p'(x)        &= p'(1)\Delta_1(x) + p(2)\Delta_2(x) + p(3)\Delta_3(x) + \ldots + p(n + 1)\Delta_{n + 1} \\
+        p'(x) - p(x) &= p'(1)\Delta_1(x) - p(1)\Delta_1(x) \\
+        p'(0) - p(0) &= p'(1)\Delta_1(0) - p(1)\Delta_1(0) \\
+        s' - s       &= (p'(1) - p(1)) \frac{(0 - 2)(0 - 3)(0 - 4)\ldots(0 - n - 1)}{(1 - 2)(1 - 3)(1 - 4)\ldots(1 - n - 1)} \\
+        s' - s       &= (p'(1) - p(1))(n + 1) \\
+        p'(1)        &= \frac{s' - s}{n + 1} + p(1)
+    \end{align*}
+    From the above calculation we know that Bob should report $\frac{s' - s}{n + 1} + p(1)$ to make the others 
+    believe that the secret is $s'$. 
+\end{Answer}
+
+\end{document}

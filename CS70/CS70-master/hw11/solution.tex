@@ -1,0 +1,255 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+\usepackage{amsfonts}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{11}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\newcommand{\E}[0]{\mathbb{E}}
+\renewcommand*{\bmod}{\mathbin{\%}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+\section*{Sundry}
+
+\begin{Answer}
+    I typeset the homework using \LaTeX and discussed the problems with the following people.
+    \begin{itemize}
+        \item Yijia Chen -- yijia.chen@berkeley.edu
+    \end{itemize}
+\end{Answer}
+
+\newpage
+\Question{Family Planning}
+
+\begin{Parts}
+
+    \Part Determine the sample space, along with the probability of each sample point.
+
+    \begin{Answer}
+        Let $b$ denote boy and $g$ denote girl. We have the sample space $\Omega = \{g, bg, bbg, bbb\}$, 
+        where $\Pr(g) = \frac{1}{2}, \Pr(bg) = \frac{1}{4}, \Pr(bbg) = \frac{1}{8}, \Pr(bbb) = \frac{1}{8}$. 
+    \end{Answer}
+
+    \Part Compute the joint distribution of $G$ and $C$.
+
+    \begin{Answer}
+        \scalebox{1.2}{
+        \begin{tabular}{|c||c|c|c|} 
+            \hline
+            & $C = 1$ & $C = 2$ & $C = 3$ \\
+            \hline
+            $G = 0$ & $0$ & $0$ & $\frac{1}{8}$ \\
+            \hline
+            $G = 1$ & $\frac{1}{2}$ & $\frac{1}{4}$ & $\frac{1}{8}$ \\
+            \hline
+            \end{tabular}}
+    \end{Answer}
+
+    \Part Use the joint distribution to compute the marginal distributions of $G$ and $C$ and confirm that the values are as you'd expect. Fill in the tables below.
+
+    \begin{Answer}
+        \scalebox{1.2}{
+        \begin{tabular}{|c||m{.85cm}|} 
+            \hline
+            $\Pr(G = 0)$ & $\frac{1}{8}$ \\
+            \hline
+            $\Pr(G = 1)$ & $\frac{7}{8}$ \\
+            \hline
+            \end{tabular}}
+        \scalebox{1.2}{
+        \begin{tabular}{|c|c|c|} 
+            \hline
+            $\Pr(C = 1)$ & $\Pr(C = 2)$ & $\Pr(C = 3)$ \\
+            \hline
+            $\frac{1}{2}$ & $\frac{1}{4}$ & $\frac{1}{4}$ \\
+            \hline
+            \end{tabular}}
+    \end{Answer}
+
+    \Part Are $G$ and $C$ independent?
+
+    \begin{Answer}
+        No.
+    \end{Answer}
+
+    \Part What is the expected number of girls the Browns will have? What is the expected number of children that the Browns will have?
+
+    \begin{Answer}
+        $\E(G) = \frac{7}{8}, \E(C) = \frac{1}{2} + \frac{1}{2} + \frac{3}{4} = \frac{7}{4}$. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{More Family Planning}
+
+\begin{Parts}
+    
+    \Part The joint distribution of $B, G$? 
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[B = i, G = j] = \frac{1}{3}(\frac{2}{3})^{i+j-1}{i+j \choose i}(\frac{1}{2})^{i+j} = {i+j \choose i}\frac{2^{i+j-1}}{6^{i+j}}
+        \end{align*}
+    \end{Answer}
+
+    \Part Given that we know there are $0$ girls in the family, what is the most likely number of boys in the family?
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[G=0]  &= \sum_{i=1}^{\infty} \Pr[B=i,G=0]=\frac{1}{2}\sum_{i=1}^{\infty}3^{-i}=\frac{1}{4} \\
+            \E(B|G=0) &= \sum_{i=1}^{\infty} \frac{i\Pr[B=i,G=0]}{\Pr[G=0]} = 2\sum_{i=1}^{\infty} \frac{i}{3^i} = 3
+        \end{align*}
+    \end{Answer}
+    
+    \Part Find $\Pr(X < Y)$, the probability that the number of children in the first family ($X$) is less than the number of children in the second family ($Y$).
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[X<Y] &= \sum_{i=1}^{\infty} \Pr[X=i]\Pr[Y>i] \\
+                     &= p(1-q)\sum_{i=1}^{\infty} (1-p)^{i-1}(1-q)^{i-1} \\
+                     &= \frac{p - pq}{p + q - pq}
+        \end{align*}
+    \end{Answer}
+    
+    \Part Show how you could obtain your answer from the previous part using an interpretation of the geometric distribution.
+    
+    \begin{Answer}
+        $p,q$ are the probabilities that the last child is born for families $X,Y$, respectively. $p(1-q)$ is the probability that $X$ has born the last child while $Y$ has not. 
+        Say this happens on day $i$, then the $i-1$ days before neither $X,Y$ has born the last child, giving us the overall probability of 
+        $p(1-q)(1-p)^{i-1}(1-q)^{i-1}$ for all possible $i$ and we sum them up. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question {Combining Distributions}
+
+\begin{Parts}
+
+    \Part Let $X \sim Pois(\lambda), Y \sim Pois(\mu)$ be independent.  Prove that $X + Y \sim Pois(\lambda + \mu)$.
+
+    \begin{Answer}
+        \begin{proof}
+            For any arbitrary $k \in \{0,1,2,\ldots\}$ we have the below formula. 
+            \begin{align*}
+                \Pr[X + Y = k] &= \sum_{j=0}^k \Pr[X = j, Y = k - j] \\
+                               &= \sum_{j=0}^k \Pr[X = j]\Pr[Y = k - j] \\
+                               &= \sum_{j=0}^k \frac{\lambda^j}{j!} e^{-\lambda} \frac{\mu^{k-j}}{(k-j)!}e^{-\mu} \\
+                               &= e^{-(\lambda + \mu)}\frac{1}{k!}\sum_{j=0}^k \frac{k!}{j!(k-j)!}\lambda^j\mu^{k-j} \\
+                               &= e^{-(\lambda + \mu)}\frac{(\lambda + \mu)^k}{k!}
+            \end{align*}
+        \end{proof}
+    \end{Answer}
+
+    \Part Let $X$ and $Y$ be defined as in the previous part. Prove that the distribution of $X$ conditional on $X+Y$ is a binomial distribution, e.g. that $X|X+Y$ is binomial. What are the parameters of the binomial distribution?
+
+    \begin{Answer}
+        \begin{proof}
+            \begin{align*}
+                \Pr[X=j|X+Y=k] &= \frac{\Pr[X=j]\Pr[Y=k-j]}{\Pr[X+Y=k]} \\
+                               &= \frac{\frac{\lambda^j}{j!} e^{-\lambda} \frac{\mu^{k-j}}{(k-j)!}e^{-\mu}}{e^{-(\lambda + \mu)}\frac{(\lambda + \mu)^k}{k!}} \\
+                               &= \frac{k!}{j!(k-j)!}(\frac{\lambda}{\lambda + \mu})^j(\frac{\mu}{\lambda + \mu})^{k-j} \\
+                               &= {k \choose j}(\frac{\lambda}{\lambda + \mu})^j(\frac{\mu}{\lambda + \mu})^{k-j}
+            \end{align*}
+            Thus, given $X+Y=k$, $X|X+Y \sim Binomial(k, \frac{\lambda}{\lambda + \mu})$. 
+        \end{proof}
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Darts}
+
+\begin{Parts}
+    
+    \Part What is the probability the dart will stay within the board?
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[x \leq 4] = 1 - e^{-4 \times \lambda} = 1 - e^{-4}
+        \end{align*}
+    \end{Answer}
+
+    \Part Say you know Yiming made it on the board. What is the probability she is within 1 unit from the center?
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[x \leq 1]            &= 1 - e^{-1 \times \lambda} = 1 - e^{-1} \\
+            \Pr[x \leq 1 | x \leq 4] &= \frac{1 - e^{-1}}{1 - e^{-4}}
+        \end{align*}
+    \end{Answer}
+
+    \Part If Yiming is within 1 unit from the center, she scores 4 points, if she is within 2 units, she scores 3, etc. In other words, Yiming scores $\lfloor 5 - x\rfloor$, where $x$ is the distance from the center. (This implies that Yimin scores 0 points if she throws it off the board). What is Yiming's expected score after one throw?
+
+    \begin{Answer}
+        \begin{align*}
+            \E[score] &= 4(1 - e^{-1}) + 3(e^{-1} - e^{-2}) + 2(e^{-2} - e^{-3}) + 1(e^{-3} - e^{-4}) \\
+                      &= 4 - e^{-1} - e^{-2} - e^{-3} - e^{-4}
+        \end{align*}
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Uniform Means}
+
+\begin{Parts}
+    
+    \Part Let $Y = \min\{X_1, X_2, \ldots, X_n\}$. Find $\E[Y]$. 
+
+    \begin{Answer}
+        \begin{align*}
+            \E[Y] &= \int_0^1 \Pr[Y > y]dy \\
+                  &= \int_0^1 \Pr[X_1 > y \land X_2 > y \land \ldots \land X_n > y]dy \\
+                  &= \int_0^1 (1 - y)^n dy \\
+                  &= \frac{1}{n+1}
+        \end{align*}
+    \end{Answer}
+
+    \Part Let $Z = \max\{X_1, X_2, \ldots, X_n\}$. Find $\E[Z]$. 
+
+    \begin{Answer}
+        \begin{align*}
+            \Pr[Z \leq x] &= \Pr[X_1 \leq x \land X_2 \leq x \land \ldots \land X_n \leq x] \\
+                          &= x \times x \times \times \ldots \times x \\
+                          &= x^n \\
+            f(x)          &= \frac{d}{dx} x^n \\
+                          &= nx^{n-1} \\
+            \E[Z]         &= \int_0^1 nx^{n-1}x \\
+                          &= \frac{n}{n+1} 
+        \end{align*}
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Moments of the Exponential Distribution}
+
+\begin{Answer}
+    \begin{proof}
+        \begin{align*}
+            \E[X^k] &= \int_0^{\infty} x^kf(x)dx \\
+                    &= \int_0^{\infty} x^k\lambda e^{-\lambda x}dx \\
+                    &= \frac{k}{\lambda^0}\int_0^{\infty} x^{k-1}e^{-\lambda x} \\
+                    &= \frac{k(k-1)}{\lambda^1}\int_0^{\infty}x^{k-2}e^{-\lambda x} \\
+                    &= \frac{k(k-1)(k-2)}{\lambda^2}\int_0^{\infty}x^{k-3}e^{-\lambda x} \\
+                    &\ldots \\
+                    &= \frac{k!}{\lambda^{k-1}}\int_0^{\infty} e^{-\lambda x} \\
+                    &= \frac{k!}{\lambda^k}
+        \end{align*}
+    \end{proof}
+\end{Answer}
+
+\end{document}

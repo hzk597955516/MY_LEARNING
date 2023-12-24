@@ -1,0 +1,289 @@
+%Template compiled by Alice lol
+\documentclass[11pt]{article}
+\usepackage{cs70}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Zehao Huang | 3033857597 | zehao@berkeley.edu}
+
+
+%%%%%%%%%%%%%%%%%%%% Course/HW info
+\newcommand*{\instr}{Babak Ayazifar and Satish Rao}
+\newcommand*{\term}{Spring 2019}
+\newcommand*{\coursenum}{CS 70}
+\newcommand*{\coursename}{Discrete Mathematics and Probability Theory}
+\newcommand*{\hwnum}{13}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\newcommand{\E}[0]{\mathrm{E}}
+\newcommand{\Var}[0]{\mathrm{Var}}
+\newcommand{\Cov}[0]{\mathrm{Cov}}
+
+\DeclareMathOperator{\di}{d\!}
+\newcommand*\Eval[3]{\left.#1\right\rvert_{#2}^{#3}}
+
+\renewcommand*{\bmod}{\mathbin{\%}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Start %%%%%%%%%%%%%%%%%
+\begin{document}
+\section*{Sundry}
+
+\begin{Answer}
+    I typeset the homework using \LaTeX and discussed the problems with the following people.
+    \begin{itemize}
+        \item Yijia Chen -- yijia.chen@berkeley.edu
+    \end{itemize}
+\end{Answer}
+
+\newpage
+\Question{Markov’s Inequality and Chebyshev’s Inequality}
+
+\begin{Parts}
+    
+    \Part $\E[X^2] = 13$
+    \begin{Answer}
+        $$\Var [X] = \E[X^2] - \E[X]^2 \implies \E[X^2] = \Var[X] + \E[x]^2 = 9 + 4 = 13$$
+    \end{Answer}
+
+    \Part $\Pr[X=2] > 0$
+    \begin{Answer}
+        This is not true. Say $X$ takes on values $a,b$ with probabilities $\frac{1}{2}$, respectively. 
+        \begin{align*}
+            \E[X] = 2   &\implies \frac{1}{2}a + \frac{1}{2}b = 2 \\
+            \E[X^2] = 9 &\implies \frac{1}{2}a^2 + \frac{1}{2}b^2 = 13 
+        \end{align*}
+        We have $a = 5, b = -1$ as a solution, under which circumstances $\Pr[X=2] = 0$. 
+    \end{Answer}
+
+    \Part $\Pr[X \geq 2] = \Pr[X \leq 2]$
+    \begin{Answer}
+        This is not true. Say $X$ takes on values $a,b$ with probabilities $p, 1-p$, respectively. 
+        \begin{align*}
+            \E[X] = 2   &\implies pa + (1-p)b = 2 \\
+            \E[X^2] = 9 &\implies pa^2 + (1-p)b^2 = 13
+        \end{align*}
+        We then know that $b = 2 \pm \frac{3}{\sqrt{\frac{1-p}{p}}}$. An example for this would be 
+        $a = -7, b = 3, p = \frac{1}{10}$. 
+    \end{Answer}
+
+    \newpage
+    \Part $\Pr[X \leq 1] \leq \frac{8}{9}$
+    \begin{Answer}
+        Since we know that $X$ is no larger than $10$, we define $Y = 10 - X$ so that $Y$ is a non-negative random variable. 
+        \begin{align*}
+            \Pr[X \leq 1] &= \Pr[Y \geq 9] \\
+                          &\leq \frac{\E[Y]}{9} \\
+                          &= \frac{8}{9}
+        \end{align*}
+    \end{Answer}
+
+    \Part $\Pr[X \geq 6] \leq \frac{9}{16}$
+    \begin{Answer}
+        \begin{align*}
+            \Pr[X \geq 6] &= \Pr[|X - \E[X]| \geq 4] - \Pr[X \leq -2] \\
+                          &\leq \Pr[|X - \E[X]| \geq 4] \\
+                          &\leq \frac{9}{16}
+        \end{align*}
+    \end{Answer}
+
+    \Part $\Pr[X \geq 6] \leq \frac{9}{32}$
+    \begin{Answer}
+        Say $X$ only takes values $a,b$ with probabilities $p,1-p$. \\
+        We have a counterexample as $\Pr[X=0] = \frac{9}{13}, \Pr[\frac{13}{2}] = \frac{4}{13}$
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Subset Card Game}
+
+\begin{Parts}
+
+    \Part Prove that the probability that Yiming wins is at most $\frac{1}{8\alpha^2}$. 
+
+    \begin{Answer}
+        \begin{proof}
+            Let the random variable $X$ denote the sum of cards in Yiming's hands. \\
+            Let the random variables $I_i=1$ if card $i$ ends up in Yiming's hands and $I_i = 0$ otherwise.  
+            \begin{align*}
+                \Var[X] &= \Var[\sum_{i=1}^k I_ic_i] \\
+                        &= \sum_{i=1}^k \Var[I_ic_i] \\
+                        &= \sum_{i=1}^k c_i^2 \Var[I_i] \\
+                        &= \frac{1}{4} \sum_{i=1}^k c_i^2 \\
+                        &= \frac{1}{4} \\
+                \Pr[X \geq \alpha] &= \frac{1}{2} \Pr[|X| \geq \alpha] \\
+                                   &\leq \frac{1}{2} \frac{1}{4\alpha^2} \\ 
+                                   &= \frac{1}{8\alpha^2}
+            \end{align*}
+        \end{proof}
+    \end{Answer}
+
+    \Part Find a deck of $k$ cards and target value $\alpha$ where the probability that Yiming wins is exactly $\frac{1}{8\alpha^2}$.
+
+    \begin{Answer}
+        Consider $k=3$. The deck is $\{\frac{\sqrt{2}}{2},0,-\frac{\sqrt{2}}{2}\}$. Let $\alpha=\frac{\sqrt{2}}{2}$. The winning probability is $\frac{1}{4}$. 
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Sampling a Gaussian With Uniform}
+
+\begin{Parts}
+    
+    \Part Prove that $-ln U_1 \sim Expo(1)$.
+
+    \begin{Answer}
+        \begin{proof}
+            \begin{align*}
+                \Pr[U_1 \leq a]      &= a \\
+                \Pr[-\ln U_1 \leq a] &= \Pr[\ln U_1 \geq -a] \\
+                                     &= \Pr[U_1 \geq e^{-a}] \\
+                                     &= 1 - e^{-a}
+            \end{align*}
+            Thus we know that $-ln U_1 \sim Expo(1)$.
+        \end{proof}
+    \end{Answer}
+
+    \Part Prove that $N_1^2 + N_2^2 \sim Expo(\frac{1}{2})$
+
+    \begin{Answer}
+        \begin{proof}
+            \begin{align*}
+                f(x,y) &= \frac{1}{2\pi} 2^{-\frac{1}{2}(x^2+y^2)} \\
+                \Pr[N_1^2 + N_2^2 \leq r^2] &= \int \int f(x,y) dx dy \\
+                                            &= \int_0^r \int_0^{2\pi} \frac{1}{2\pi} e^{-\frac{1}{2}r^2} d\theta dr \\
+                                            &= 1 - e^{-\frac{1}{2}r^2}
+            \end{align*}
+            Thus we know that $N_1^2 + N_2^2 \sim Expo(\frac{1}{2})$. 
+        \end{proof}
+    \end{Answer}
+
+    \Part How would you transform these two random variables into a normal random variable with mean 0 and variance 1?
+
+    \begin{Answer}
+        Let $-\frac{1}{2} \ln U_1$ represent $R^2$ since $R^2 \sim \exp(\frac{1}{2})$ \\
+        Let $2\pi U_2$ represent the angle since angle is a uniformly distributed random variable $(0, 2\pi)$.
+    \end{Answer}
+
+\end{Parts}
+
+\newpage
+\Question{Optimal Gambling}
+
+\begin{Parts}
+    
+    \Part What is $E[X_n]$ in terms of $X_0$, $p$, and $q$?
+    \begin{Answer}
+        \begin{align*}
+            E[X_i] &= X_{i-1} + qX_{i-1}p - qX_{i-1}(1-p) \\ 
+                   &= X_{i-1} + X_{i-1} q(2p-1) \\
+                   &= (1 + 2pq - q) X_{i-1} \\
+            E[X]   &= (1 + 2pq - q)^n X_0
+        \end{align*}
+    \end{Answer}
+
+    \Part What value of $q$ will maximize $E[X_n]$?
+    \begin{Answer}
+        Since $2p - 1 > 0$, maximizing $q$ will maximize $E[X_n]$. We choose $q = 1$. 
+        \begin{align*}
+            \Pr[X_n = 2^n X_0] &= p^n \\
+            \Pr[X_n = 0]       &= 1 - p^n
+        \end{align*}
+    \end{Answer}
+
+    \Part Express $X_n$ in terms of $n,q,X_0,W_n$, where $W_n$ is the number of rounds you have won up until round $n$.
+    \begin{Answer}
+        If the player wins, the player's profit is $X_i = (1+q)X_{i-1}$. If the player loses, the profit is $X_i = (1-q)X_{i-1}$. 
+        $$X_n = (1-q)^{n - W_n}(1+q)^{W_n}X_0$$
+    \end{Answer}
+
+    \Part Convergence? 
+    \begin{Answer}
+        It converges to the following expression. 
+        \begin{align*}
+            \lim_{n \to \infty} \ln X_n / n &= \lim_{n \to \infty} \frac{1}{n} (1-p)n \ln (1-q) + pn \ln (1+q) + \ln X_0 \\
+                                            &= (1-p) \ln (1-q) + p \ln(1+q)
+        \end{align*}
+    \end{Answer}
+
+    \newpage
+    \Part Find the value of $q$ that maximizes your asymptotic growth rate. 
+    \begin{Answer}
+        \begin{align*}
+            c   &= (1-p) \ln (1-q) + p \ln(1+q) \\
+            e^c &= (1-q)^{1-p}(1+q)^p
+        \end{align*}
+        The above expression is maximized when $q = 2p - 1$. 
+    \end{Answer}
+
+    \Part Using the $q$ in the previous part and compute $E[X_n]$. 
+
+    \begin{Answer}
+        \begin{align*}
+            E[X_n] = (2 - 2p)^n(1-p) 2p^{np}X_0 = 2^n(1-p)^{n - np}p^{np}X_0
+        \end{align*}
+    \end{Answer}
+
+    \Part True or false
+    \begin{Answer}
+        It is not true. According to Chebyshev’s Inequality, we have 
+        \begin{align*}
+            n &\geq \frac{p(1-p)}{\epsilon^2\sigma} \\
+              &= \frac{1}{4.01^2 \times 0.05} \\
+              &= 500
+        \end{align*}
+        Sample space is too small. 
+    \end{Answer}
+
+    \Part True or false
+    \begin{Answer}
+        $p = 0.74$, $\frac{\sigma}{\sqrt{n}} = \frac{\sqrt{p(1-p)}}{n} \approx 0.04386$. \\
+        The confidence interval is $[0.74 \pm 0.04386 \times 2] = [0.652, 0.828]$.
+    \end{Answer}
+\end{Parts}
+
+\newpage
+\Question{Boba in a Straw}
+
+\begin{Parts}
+    
+    \Part What is the expected number of seconds that elapse before the straw is completely filled with boba for the first time?
+    \begin{Answer}
+        Using finite Markov chain to solve this problem. Let $t(x,y)$ denote the expected number of seconds for the straw to 
+        be completely full if we start with top component having $x$ boba and the bottom component having $y$ boba. We then have the following equations. 
+        \begin{align*}
+            t(0,0) &= pt(0,1) + (1-p)t(0,0) + 1 \\
+            t(0,1) &= pt(1,1) + (1-p)t(1,0) + 1 \\
+            t(1,0) &= pt(0,1) + (1-p)t(0,0) + 1 \\
+            t(1,1) &= 0
+        \end{align*}
+        We output $t(0,0)$ as the answer to this problem.
+    \end{Answer}
+
+    \Part Under these conditions, answer the previous part again. 
+    \begin{Answer}
+        Using finite Markov chain to solve this problem again. Let Let $t(x,y)$ denote the expected number of seconds for the straw to 
+        be completely full if we start with top component having $x$ boba and the bottom component having $y$ boba. We then have the following equations. 
+        \begin{align*}
+            t(0,0) &= p(t(0,1) + 2) + (1-p)(t(0,0) + 1) \\
+            t(0,1) &= p(t(1,1) + 3) + (1-p)(t(1,0) + 2) \\
+            t(1,0) &= p(t(0,1) + 2) + (1-p)(t(0,0) + 1) \\
+            t(1,1) &= 0
+        \end{align*}
+    \end{Answer}
+
+    \Part What is the long-run average rate of Jonathan’s calorie consumption?
+    \begin{Answer}
+        In the long run the total number of boba consumed is just those coming into the bottom, so the rate is $10p$. 
+    \end{Answer}
+
+    \Part What is the long-run average number of boba which can be found inside the straw?
+    \begin{Answer}
+        The expected number of boba at the bottom is $p$, the expected number of boba at the bottom is $p$. Thus the 
+        total number of boba inside the straw is $2p$. 
+    \end{Answer}
+
+\end{Parts}
+    
+\end{document}
